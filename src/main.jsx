@@ -446,15 +446,14 @@ function CapsuleMachine({ active }) {
 
 function ReadingRecordSection({ setCoins }) {
   const [readingRecords, setReadingRecords] = useLocalStorage('knovel-reading-records', []);
-  const [form, setForm] = useState({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
+  const [form, setForm] = useState({ title: '', author: '', reason: '' });
   const [message, setMessage] = useState('');
 
   function submitReadingRecord(event) {
     event.preventDefault();
-    const tags = [form.tag1, form.tag2, form.tag3].map((tag) => tag.trim()).filter(Boolean);
     const reasonLength = form.reason.replace(/\s/g, '').length;
 
-    if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || reasonLength < 20 || tags.length < 3) {
+    if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || reasonLength < 20) {
       setMessage('독서 기록은 20자 이상 작성해 주세요.');
       return;
     }
@@ -466,15 +465,14 @@ function ReadingRecordSection({ setCoins }) {
         title: form.title.trim(),
         author: form.author.trim(),
         reason: form.reason.trim(),
-        tags,
         reward,
         createdAt: new Date().toISOString(),
       },
       ...current,
     ]);
     setCoins((current) => current + reward);
-    setMessage('독서 기록이 저장되었습니다. 코인 3개를 받았습니다.');
-    setForm({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
+    setMessage('독서 기록이 저장되었습니다. 토큰 3개를 받았습니다.');
+    setForm({ title: '', author: '', reason: '' });
   }
 
   return (
@@ -484,7 +482,7 @@ function ReadingRecordSection({ setCoins }) {
           <p className="eyebrow">Reader Notes</p>
           <h2 className="section-title">나만의 한국소설 독서기록장</h2>
         </div>
-        <div className="reward-note">독서 기록을 남기면 코인 3개를 드립니다.</div>
+        <div className="reward-note">독서 기록을 남기면 토큰 3개를 드립니다.</div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
@@ -508,34 +506,14 @@ function ReadingRecordSection({ setCoins }) {
             value={form.reason}
             onChange={(event) => setForm((current) => ({ ...current, reason: event.target.value }))}
           />
-          <div className="grid gap-2 sm:grid-cols-3">
-            <input
-              className="field"
-              placeholder="태그 1"
-              value={form.tag1}
-              onChange={(event) => setForm((current) => ({ ...current, tag1: event.target.value }))}
-            />
-            <input
-              className="field"
-              placeholder="태그 2"
-              value={form.tag2}
-              onChange={(event) => setForm((current) => ({ ...current, tag2: event.target.value }))}
-            />
-            <input
-              className="field"
-              placeholder="태그 3"
-              value={form.tag3}
-              onChange={(event) => setForm((current) => ({ ...current, tag3: event.target.value }))}
-            />
-          </div>
-          <button type="submit" className="primary-button">독서 기록 저장하고 코인 받기</button>
+          <button type="submit" className="primary-button">독서 기록 저장하고 토큰 받기</button>
           {message && <p className="text-sm font-bold text-emerald-800">{message}</p>}
         </form>
 
         <div className="review-list">
           <h3 className="text-lg font-black text-stone-900">내 독서 기록</h3>
           {readingRecords.length === 0 ? (
-            <p className="empty-copy">아직 저장한 독서 기록이 없습니다. 감상을 20자 이상 남기면 코인 3개를 받습니다.</p>
+            <p className="empty-copy">아직 저장한 독서 기록이 없습니다. 감상을 20자 이상 남기면 토큰 3개를 받습니다.</p>
           ) : (
             readingRecords.slice(0, 6).map((record) => (
               <article key={record.id} className="review-item">
@@ -544,9 +522,6 @@ function ReadingRecordSection({ setCoins }) {
                   <span className="text-xs font-black text-stone-500">{record.author || '작가 미상'}</span>
                 </div>
                 <p className="mt-2 line-clamp-3 text-sm leading-6 text-stone-700">{record.reason || record.text}</p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {(record.tags || []).map((tag) => <span key={tag} className="rounded bg-stone-200 px-2 py-1 text-xs font-bold">{tag}</span>)}
-                </div>
               </article>
             ))
           )}
@@ -596,7 +571,7 @@ function App() {
     if (localStorage.getItem('knovel-daily-reward-date') === today) return;
     localStorage.setItem('knovel-daily-reward-date', today);
     setCoins((current) => current + 3);
-    setDailyRewardMessage('오늘의 접속 보상으로 코인 3개를 받았습니다.');
+    setDailyRewardMessage('오늘의 접속 보상으로 토큰 3개를 받았습니다.');
   }, [setCoins]);
 
   useEffect(() => {
@@ -702,7 +677,7 @@ function App() {
 
   function drawGacha() {
     if (coins <= 0) {
-      setGachaMessage('재화가 없습니다. 리뷰를 쓰면 다시 뽑을 수 있어요.');
+      setGachaMessage('토큰이 없습니다. 독서 기록을 쓰면 다시 뽑을 수 있어요.');
       return;
     }
     if (!books.length) {
@@ -778,7 +753,7 @@ function App() {
             <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
           </div>
           <div className="flex items-center gap-2 text-right">
-            <div className="status-pill">재화 {coins}</div>
+            <div className="status-pill">토큰 {coins}</div>
             <div className="status-pill">수집률 {collectionRate}%</div>
           </div>
         </div>
@@ -812,7 +787,7 @@ function App() {
           <CapsuleMachine active={machineActive} />
           <div className="machine-actions">
             <button type="button" className="primary-button" onClick={drawGacha}>캡슐 뽑기</button>
-            <p>{gachaMessage || '뽑기에는 코인 1개가 필요합니다.'}</p>
+            <p>{gachaMessage || '뽑기에는 토큰 1개가 필요합니다.'}</p>
           </div>
           <div className="result-slot">
             {result ? (
