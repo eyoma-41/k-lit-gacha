@@ -226,14 +226,12 @@ function tagsOf(book) {
   return ['태그1', '태그2', '태그3', '태그4', '태그5'].map((key) => book[key]).filter(Boolean);
 }
 
-function normalizeImageUrl(url) {
-  if (!url) return '';
-  const trimmed = String(url).trim();
-  const driveMatch = trimmed.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-  if (driveMatch) return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w600`;
-  const idMatch = trimmed.match(/[?&]id=([^&]+)/);
-  if (trimmed.includes('drive.google.com') && idMatch) return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w600`;
-  return trimmed;
+function normalizeImageUrl(value) {
+  if (!value) return '';
+  const trimmed = String(value).trim();
+  if (trimmed.startsWith('http')) return trimmed;
+  if (trimmed.startsWith('/')) return trimmed;
+  return `/covers/${trimmed}`;
 }
 
 // 이미지 링크가 비어 있을 때 태그, 장르, 제목 순서로 카드의 대체 이모지를 고른다.
