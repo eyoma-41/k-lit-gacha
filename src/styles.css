@@ -308,6 +308,7 @@ main > *:not(.paper-grain) {
 }
 
 .card-shell {
+  flex: 0 0 auto;
   width: 260px;
   height: 380px;
   border: 0;
@@ -320,6 +321,36 @@ main > *:not(.paper-grain) {
 .scale-card-sm {
   width: 220px;
   height: 322px;
+}
+
+.scale-card-sm .card-back {
+  padding: 13px;
+}
+
+.scale-card-sm .back-tag-row {
+  max-height: 44px;
+  overflow: auto;
+  gap: 3px;
+  padding: 6px 0;
+}
+
+.scale-card-sm .tag-chip {
+  padding: 2px 5px;
+  font-size: 8px;
+}
+
+.scale-card-sm .archive-lines {
+  margin-top: 8px;
+}
+
+.scale-card-sm .archive-copy {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.scale-card-sm .location-note {
+  margin-top: 7px;
+  padding: 6px 8px;
 }
 
 .flip-card {
@@ -478,6 +509,7 @@ main > *:not(.paper-grain) {
   gap: 5px;
   border-bottom: 1px dashed rgba(120, 93, 56, 0.34);
   padding: 9px 0;
+  flex: 0 0 auto;
 }
 
 .pattern-emojis {
@@ -556,6 +588,8 @@ main > *:not(.paper-grain) {
   min-height: 0;
   flex: 1;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   border-radius: 10px;
   padding: 4px 2px 8px;
 }
