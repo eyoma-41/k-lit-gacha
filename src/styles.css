@@ -103,6 +103,18 @@ main > *:not(.paper-grain) {
   color: #fffaf0;
 }
 
+.daily-reward-message {
+  width: fit-content;
+  margin-top: 16px;
+  border: 1px solid rgba(32, 164, 100, 0.28);
+  border-radius: 999px;
+  background: rgba(237, 255, 245, 0.82);
+  padding: 9px 13px;
+  color: #166534;
+  font-size: 13px;
+  font-weight: 900;
+}
+
 .gacha-stage {
   position: relative;
   min-height: 530px;
@@ -1192,6 +1204,47 @@ main > *:not(.paper-grain) {
   .section-head {
     align-items: start;
     flex-direction: column;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .collection-grid .scale-card-sm {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 220 / 322;
+  }
+
+  .collection-grid .card-face {
+    border-width: 2px;
+    border-radius: 12px;
+  }
+
+  .collection-grid .card-front,
+  .collection-grid .card-back {
+    padding: 9px;
+  }
+
+  .collection-grid .card-visual img {
+    width: min(96px, 72%);
+    height: 112px;
+    border-radius: 10px;
+  }
+
+  .collection-grid .card-visual span {
+    width: 84px;
+    height: 84px;
+    font-size: 48px;
+  }
+
+  .collection-grid .front-title {
+    font-size: 15px;
+  }
+
+  .collection-grid .front-meta-line {
+    font-size: 10px;
   }
 
   .combine-layout {
