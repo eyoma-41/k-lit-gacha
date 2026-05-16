@@ -199,7 +199,7 @@ function cleanBooks(rows) {
         출판사: book.출판사 || '',
         소개문: book.소개문 || '소개문이 아직 등록되지 않았습니다.',
         확인메모: memo,
-        이미지URL: normalizeImageUrl(imageUrl),
+        이미지URL: normalizeImageUrl(imageUrl || book.id),
         태그1: book.태그1 || '',
         태그2: book.태그2 || '',
         태그3: book.태그3 || '',
