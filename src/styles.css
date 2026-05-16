@@ -988,14 +988,16 @@ main > *:not(.paper-grain) {
 
 @media (max-width: 860px) {
   .gacha-stage {
-    display: flex;
+    display: grid;
     min-height: 0;
     width: 100%;
-    flex-direction: column;
+    grid-template-columns: minmax(142px, 0.92fr) minmax(158px, 1fr);
     align-items: center;
-    gap: 22px;
+    justify-items: center;
+    column-gap: 10px;
+    row-gap: 14px;
     overflow: hidden;
-    padding: 22px 16px 28px;
+    padding: 18px 12px 22px;
   }
 
   .gacha-stage::before {
@@ -1009,9 +1011,10 @@ main > *:not(.paper-grain) {
     left: auto;
     top: auto;
     order: 2;
-    transform: scale(0.82);
+    justify-self: end;
+    transform: scale(0.62);
     transform-origin: center;
-    margin: -20px 0 -28px;
+    margin: -58px -34px -58px -52px;
   }
 
   .machine-actions {
@@ -1019,9 +1022,21 @@ main > *:not(.paper-grain) {
     left: auto;
     top: auto;
     order: 1;
+    grid-column: 1 / -1;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .machine-actions .primary-button {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .machine-actions p {
+    font-size: 12px;
   }
 
   .machine-active {
@@ -1034,8 +1049,54 @@ main > *:not(.paper-grain) {
     right: auto;
     top: auto;
     order: 3;
+    justify-self: start;
     transform: none;
     transform-origin: center;
+  }
+
+  .result-slot .card-shell,
+  .result-slot .empty-card {
+    width: 170px;
+    height: 248px;
+  }
+
+  .result-slot .empty-card {
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .result-slot .card-face {
+    border-width: 2px;
+    border-radius: 12px;
+  }
+
+  .result-slot .card-front,
+  .result-slot .card-back {
+    padding: 10px;
+  }
+
+  .result-slot .card-visual {
+    padding: 8px 0 6px;
+  }
+
+  .result-slot .card-visual span {
+    width: 82px;
+    height: 82px;
+    font-size: 48px;
+  }
+
+  .result-slot .card-visual img {
+    width: 96px;
+    height: 112px;
+    border-radius: 10px;
+  }
+
+  .result-slot .front-title {
+    font-size: 15px;
+  }
+
+  .result-slot .front-meta-line {
+    font-size: 10px;
   }
 
   .section-head {
@@ -1056,10 +1117,10 @@ main > *:not(.paper-grain) {
 }
 
 @keyframes machineShakeMobile {
-  0%, 100% { transform: rotate(0) scale(0.82); }
-  25% { transform: rotate(-4deg) scale(0.82); }
-  52% { transform: rotate(4deg) scale(0.82); }
-  78% { transform: rotate(-2deg) scale(0.82); }
+  0%, 100% { transform: rotate(0) scale(0.62); }
+  25% { transform: rotate(-4deg) scale(0.62); }
+  52% { transform: rotate(4deg) scale(0.62); }
+  78% { transform: rotate(-2deg) scale(0.62); }
 }
 
 @media (max-width: 430px) {
