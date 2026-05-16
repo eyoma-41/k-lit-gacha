@@ -231,7 +231,14 @@ function normalizeImageUrl(value) {
   const trimmed = String(value).trim();
   if (/^https?:\/\//i.test(trimmed)) return '';
   if (trimmed.startsWith('/cover/')) return trimmed;
-  return `/cover/${trimmed}`;
+  const cleanName = trimmed.replace(/^\/+/, '').replace(/^cover\//, '');
+  if (/^\d+$/.test(cleanName)) return `/cover/book_${cleanName.padStart(3, '0')}.jpg`;
+  if (/^\d+\.(jpe?g|png|webp)$/i.test(cleanName)) {
+    const [number, extension] = cleanName.split('.');
+    return `/cover/book_${number.padStart(3, '0')}.${extension}`;
+  }
+  if (!/\.(jpe?g|png|webp)$/i.test(cleanName)) return `/cover/${cleanName}.jpg`;
+  return `/cover/${cleanName}`;
 }
 
 // 이미지 링크가 비어 있을 때 태그, 장르, 제목 순서로 카드의 대체 이모지를 고른다.
