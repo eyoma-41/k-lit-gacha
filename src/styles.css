@@ -115,6 +115,15 @@ main > *:not(.paper-grain) {
   font-weight: 900;
 }
 
+.image-credit {
+  width: min(100%, 36rem);
+  margin-top: 8px;
+  text-align: right;
+  color: #8a7555;
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .gacha-stage {
   position: relative;
   min-height: 530px;

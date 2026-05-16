@@ -229,8 +229,8 @@ function tagsOf(book) {
 function normalizeImageUrl(value) {
   if (!value) return '';
   const trimmed = String(value).trim();
-  if (trimmed.startsWith('http')) return trimmed;
-  if (trimmed.startsWith('/')) return trimmed;
+  if (/^https?:\/\//i.test(trimmed)) return '';
+  if (trimmed.startsWith('/cover/')) return trimmed;
   return `/cover/${trimmed}`;
 }
 
@@ -778,6 +778,7 @@ function App() {
           <h2 className="mt-3 max-w-xl whitespace-nowrap text-[clamp(2.05rem,5.6vw,3.65rem)] font-black leading-tight">
             한국 소설 카드를 모아보세요.
           </h2>
+          <p className="image-credit">이미지 출처: 알라딘</p>
           {dailyRewardMessage && (
             <p className="daily-reward-message">{dailyRewardMessage}</p>
           )}
