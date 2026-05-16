@@ -334,6 +334,13 @@ function uniqueValues(items, selector) {
   return [...new Set(items.map(selector).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'ko'));
 }
 
+function localDateKey() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 function BookCard({ card, tagColors, compact = false }) {
   const [flipped, setFlipped] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
@@ -437,30 +444,23 @@ function CapsuleMachine({ active }) {
   );
 }
 
-function ReviewSection({ setCoins }) {
-  const [reviews, setReviews] = useLocalStorage('knovel-recommendations', []);
+function ReadingRecordSection({ setCoins }) {
+  const [readingRecords, setReadingRecords] = useLocalStorage('knovel-reading-records', []);
   const [form, setForm] = useState({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    setReviews((current) =>
-      current.filter((review) => {
-        const text = `${review.title || ''} ${review.author || ''} ${review.reason || review.text || ''}`;
-        return !/혼모노|파과|0000|~~~/.test(text);
-      })
-    );
-  }, [setReviews]);
-
-  function submitReview(event) {
+  function submitReadingRecord(event) {
     event.preventDefault();
     const tags = [form.tag1, form.tag2, form.tag3].map((tag) => tag.trim()).filter(Boolean);
-    if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || tags.length < 3) {
-      setMessage('책 제목, 작가명, 추천 이유, 태그 3개를 모두 입력해 주세요.');
+    const reasonLength = form.reason.replace(/\s/g, '').length;
+
+    if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || reasonLength < 20 || tags.length < 3) {
+      setMessage('독서 기록은 20자 이상 작성해 주세요.');
       return;
     }
 
     const reward = 3;
-    setReviews((current) => [
+    setReadingRecords((current) => [
       {
         id: Date.now(),
         title: form.title.trim(),
@@ -473,22 +473,23 @@ function ReviewSection({ setCoins }) {
       ...current,
     ]);
     setCoins((current) => current + reward);
-    setMessage('추천이 저장되었습니다. 재화 3개를 받았습니다.');
+    setMessage('독서 기록이 저장되었습니다. 코인 3개를 받았습니다.');
     setForm({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
   }
 
   return (
-    <section className="section-band" id="reviews">
+    <section className="section-band" id="reading-records">
       <div className="section-head">
         <div>
           <p className="eyebrow">Reader Notes</p>
-          <h2 className="section-title">내가 추천하는 한국 소설</h2>
+          <h2 className="section-title">나만의 한국소설 독서기록장</h2>
         </div>
-        <div className="reward-note">책을 추천하면 캡슐 재화 3개를 드립니다.</div>
+        <div className="reward-note">독서 기록을 남기면 코인 3개를 드립니다.</div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-        <form onSubmit={submitReview} className="review-form">
+        <form onSubmit={submitReadingRecord} className="review-form">
+          <p className="empty-copy">* 이 기록은 다른 사람에게 공개되지 않습니다.</p>
           <input
             className="field"
             placeholder="책 제목"
@@ -503,7 +504,7 @@ function ReviewSection({ setCoins }) {
           />
           <textarea
             className="field min-h-36 resize-y"
-            placeholder="추천 이유"
+            placeholder="감상"
             value={form.reason}
             onChange={(event) => setForm((current) => ({ ...current, reason: event.target.value }))}
           />
@@ -527,23 +528,24 @@ function ReviewSection({ setCoins }) {
               onChange={(event) => setForm((current) => ({ ...current, tag3: event.target.value }))}
             />
           </div>
-          <button type="submit" className="primary-button">추천 저장하고 재화 받기</button>
+          <button type="submit" className="primary-button">독서 기록 저장하고 코인 받기</button>
           {message && <p className="text-sm font-bold text-emerald-800">{message}</p>}
         </form>
 
         <div className="review-list">
-          {reviews.length === 0 ? (
-            <p className="empty-copy">아직 추천한 소설이 없습니다. 좋아하는 한국 소설을 남기면 캡슐 3번이 돌아옵니다.</p>
+          <h3 className="text-lg font-black text-stone-900">내 독서 기록</h3>
+          {readingRecords.length === 0 ? (
+            <p className="empty-copy">아직 저장한 독서 기록이 없습니다. 감상을 20자 이상 남기면 코인 3개를 받습니다.</p>
           ) : (
-            reviews.slice(0, 6).map((review) => (
-              <article key={review.id} className="review-item">
+            readingRecords.slice(0, 6).map((record) => (
+              <article key={record.id} className="review-item">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-black text-stone-900">{review.title}</h3>
-                  <span className="text-xs font-black text-stone-500">{review.author || '작가 미상'}</span>
+                  <h3 className="font-black text-stone-900">{record.title}</h3>
+                  <span className="text-xs font-black text-stone-500">{record.author || '작가 미상'}</span>
                 </div>
-                <p className="mt-2 line-clamp-3 text-sm leading-6 text-stone-700">{review.reason || review.text}</p>
+                <p className="mt-2 line-clamp-3 text-sm leading-6 text-stone-700">{record.reason || record.text}</p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {(review.tags || []).map((tag) => <span key={tag} className="rounded bg-stone-200 px-2 py-1 text-xs font-bold">{tag}</span>)}
+                  {(record.tags || []).map((tag) => <span key={tag} className="rounded bg-stone-200 px-2 py-1 text-xs font-bold">{tag}</span>)}
                 </div>
               </article>
             ))
@@ -575,20 +577,27 @@ function App() {
   const [combineResult, setCombineResult] = useState(null);
   const [pendingCombination, setPendingCombination] = useState(null);
   const [combineAnimating, setCombineAnimating] = useState(false);
+  const [dailyRewardMessage, setDailyRewardMessage] = useState('');
 
   useEffect(() => {
     if (localStorage.getItem('knovel-storage-version') === STORAGE_VERSION) return;
     [
       'knovel-collection',
       'knovel-recent',
-      'knovel-recommendations',
       'knovel-coins-v2',
       'knovel-coins',
-      'knovel-reviews',
     ].forEach((key) => localStorage.removeItem(key));
     localStorage.setItem('knovel-storage-version', STORAGE_VERSION);
     window.location.reload();
   }, []);
+
+  useEffect(() => {
+    const today = localDateKey();
+    if (localStorage.getItem('knovel-daily-reward-date') === today) return;
+    localStorage.setItem('knovel-daily-reward-date', today);
+    setCoins((current) => current + 3);
+    setDailyRewardMessage('오늘의 접속 보상으로 코인 3개를 받았습니다.');
+  }, [setCoins]);
 
   useEffect(() => {
     async function loadData() {
@@ -794,6 +803,9 @@ function App() {
           <h2 className="mt-3 max-w-xl whitespace-nowrap text-[clamp(2.05rem,5.6vw,3.65rem)] font-black leading-tight">
             한국 소설 카드를 모아보세요.
           </h2>
+          {dailyRewardMessage && (
+            <p className="daily-reward-message">{dailyRewardMessage}</p>
+          )}
         </div>
 
         <div className="gacha-stage">
@@ -832,7 +844,7 @@ function App() {
           ))}
         </div>
       </section>
-      <ReviewSection setCoins={setCoins} />
+      <ReadingRecordSection setCoins={setCoins} />
         </>
       ) : activeView === 'collection' ? (
 
