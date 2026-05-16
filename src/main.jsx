@@ -1,0 +1,966 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles.css';
+
+const SHEET_CONFIG = {
+  spreadsheetId: '1BvVWjkgcXLbUkt7fROJ_aofdZFNcEbrq',
+  sheets: {
+    Book_List: { sheet: 'Book_List', gid: '', csvUrl: '' },
+    Tag_Color_Map: { sheet: 'Tag_Color_Map', gid: '', csvUrl: '' },
+    Rarity_Config: { sheet: 'Rarity_Config', gid: '', csvUrl: '' },
+    Review_Rewards: { sheet: 'Review_Rewards', gid: '', csvUrl: '' },
+  },
+};
+
+const SAMPLE_BOOKS = [
+  {
+    id: 'sample-1',
+    제목: '파도 사이의 편지',
+    작가: '샘플 작가',
+    출간년: '2021',
+    장르구분: '장편',
+    출판사: '종이와잉크',
+    소개문: '제주 바다를 떠난 사람이 오래 묻어둔 가족의 기억을 따라 다시 섬으로 돌아오는 회복의 이야기.',
+    확인메모: '도서관 문학자료실 A-01',
+    이미지URL: '',
+    태그1: '제주',
+    태그2: '가족',
+    태그3: '회복',
+    태그4: '기억',
+    태그5: '장편',
+  },
+  {
+    id: 'sample-2',
+    제목: '도시의 밤과 로봇',
+    작가: '가상 소설가',
+    출간년: '2024',
+    장르구분: 'SF',
+    출판사: '아카이브문학',
+    소개문: '사라진 기억을 수집하는 로봇과 도시 변두리의 청소년들이 서로의 고독을 번역하는 근미래 소설.',
+    확인메모: '도서관 신간 코너 B-14',
+    이미지URL: '',
+    태그1: 'SF',
+    태그2: '로봇',
+    태그3: '도시',
+    태그4: '청소년',
+    태그5: '고독',
+  },
+];
+
+const SAMPLE_TAG_COLORS = {
+  사랑: '#ef6f6c',
+  성장: '#6abf69',
+  가족: '#d99a4e',
+  청소년: '#4aa3df',
+  회복: '#74b49b',
+  고독: '#565f89',
+  미스터리: '#6d5dfc',
+  SF: '#3aaed8',
+  제주: '#3d9fbf',
+  기억: '#c08497',
+  로봇: '#7a8cff',
+  도시: '#59656f',
+  장편: '#b08968',
+};
+
+const DEFAULT_RARITIES = [
+  { 등급: '마스터피스', 확률분모: '100', 표시명: '마스터피스', 설명: '가장 희귀한 문학적 섬광' },
+  { 등급: '슈퍼레어', 확률분모: '50', 표시명: '슈퍼레어', 설명: '강한 수집감을 주는 특별 카드' },
+  { 등급: '울트라레어', 확률분모: '30', 표시명: '울트라레어', 설명: '빛과 질감이 도드라지는 카드' },
+  { 등급: '스페셜레어', 확률분모: '10', 표시명: '스페셜레어', 설명: '선명한 연출이 들어간 카드' },
+  { 등급: '레어', 확률분모: '5', 표시명: '레어', 설명: '은은한 광택을 두른 카드' },
+  { 등급: '스페셜', 확률분모: '3', 표시명: '스페셜', 설명: '기본보다 조금 더 특별한 카드' },
+  { 등급: '노멀', 확률분모: '', 표시명: '노멀', 설명: '기본 카드' },
+];
+
+const EMOJI_RULES = [
+  ['사랑', '❤️'], ['성장', '🌱'], ['가족', '🏠'], ['청소년', '🧃'], ['회복', '🌿'],
+  ['고독', '🌙'], ['미스터리', '🕵️'], ['스릴러', '🔪'], ['공포', '👻'], ['SF', '🚀'],
+  ['환상', '✨'], ['판타지', '🐉'], ['죽음', '🕯️'], ['애도', '🕯️'], ['역사', '🏛️'],
+  ['제주', '🌊'], ['여성', '🪞'], ['노동', '🧰'], ['도시', '🌃'], ['예술', '🎨'],
+  ['음악', '🎧'], ['우정', '🤝'], ['폭력', '⚡'], ['기억', '📼'], ['상처', '🩹'],
+  ['기후', '🌿'], ['로봇', '🤖'], ['동물', '🐋'], ['노년', '🪑'], ['문학상', '🏆'],
+  ['앤솔로지', '📚'], ['단편', '📖'], ['장편', '📕'],
+];
+
+const RARITY_ORDER = ['마스터피스', '슈퍼레어', '울트라레어', '스페셜레어', '레어', '스페셜'];
+const STARTING_COINS = 130;
+const STORAGE_VERSION = 'rarity-v2';
+const RARITY_RANK = ['노멀', '스페셜', '레어', '스페셜레어', '울트라레어', '슈퍼레어', '마스터피스'];
+
+function csvUrlFor(name) {
+  const entry = SHEET_CONFIG.sheets[name];
+  const cacheBust = `cb=${Date.now()}`;
+  if (entry.csvUrl) return `${entry.csvUrl}${entry.csvUrl.includes('?') ? '&' : '?'}${cacheBust}`;
+  if (entry.gid) {
+    return `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.spreadsheetId}/export?format=csv&gid=${entry.gid}&${cacheBust}`;
+  }
+  return `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(entry.sheet)}&${cacheBust}`;
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      cell += '"';
+      i += 1;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      row.push(cell.trim());
+      cell = '';
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') i += 1;
+      row.push(cell.trim());
+      if (row.some(Boolean)) rows.push(row);
+      row = [];
+      cell = '';
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell.trim());
+  if (row.some(Boolean)) rows.push(row);
+
+  const headers = rows.shift() || [];
+  return rows.map((values) =>
+    headers.reduce((item, header, index) => {
+      item[header] = values[index] || '';
+      return item;
+    }, {})
+  );
+}
+
+async function fetchSheet(name) {
+  const response = await fetch(csvUrlFor(name), { cache: 'no-store' });
+  if (!response.ok) throw new Error(`${name} fetch failed`);
+  return parseCSV(await response.text());
+}
+
+function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() => {
+    try {
+      const saved = localStorage.getItem(key);
+      return saved ? JSON.parse(saved) : initialValue;
+    } catch {
+      return initialValue;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue];
+}
+
+function cleanBooks(rows) {
+  return rows
+    .filter((book) => book.제목)
+    .map((book, index) => {
+      const memo = book.확인메모 || book['확인 메모'] || book.도서위치 || book['도서 위치'] || book.위치 || '';
+      const imageUrl =
+        book['첨부 링크'] ||
+        book.첨부링크 ||
+        book['이미지 링크'] ||
+        book.이미지링크 ||
+        book.이미지URL ||
+        book['이미지 URL'] ||
+        book.이미지 ||
+        book.책표지 ||
+        book['책표지 링크'] ||
+        book.책표지링크 ||
+        book.책표지URL ||
+        book['책표지 URL'] ||
+        book.표지 ||
+        book['표지 링크'] ||
+        book.표지링크 ||
+        book.표지이미지URL ||
+        book['표지이미지 URL'] ||
+        book.표지이미지URL_직접입력 ||
+        book.source_url ||
+        book.sourceUrl ||
+        book.Source_URL ||
+        '';
+      return {
+        id: book.id || `book-${index + 1}`,
+        제목: book.제목 || '제목 미상',
+        작가: book.작가 || '작가 미상',
+        출간년: book.출간년 || '',
+        장르구분: book.장르구분 || '',
+        출판사: book.출판사 || '',
+        소개문: book.소개문 || '소개문이 아직 등록되지 않았습니다.',
+        확인메모: memo,
+        이미지URL: normalizeImageUrl(imageUrl),
+        태그1: book.태그1 || '',
+        태그2: book.태그2 || '',
+        태그3: book.태그3 || '',
+        태그4: book.태그4 || '',
+        태그5: book.태그5 || '',
+      };
+    });
+}
+
+function refreshCardBooks(cards, latestBooks) {
+  const byId = new Map(latestBooks.map((book) => [String(book.id), book]));
+  const byTitleAuthor = new Map(latestBooks.map((book) => [`${book.제목}::${book.작가}`, book]));
+
+  return cards.map((card) => {
+    const latest =
+      byId.get(String(card.book?.id)) ||
+      byTitleAuthor.get(`${card.book?.제목}::${card.book?.작가}`);
+
+    return latest ? { ...card, book: { ...card.book, ...latest } } : card;
+  });
+}
+
+function tagsOf(book) {
+  return ['태그1', '태그2', '태그3', '태그4', '태그5'].map((key) => book[key]).filter(Boolean);
+}
+
+function normalizeImageUrl(url) {
+  if (!url) return '';
+  const trimmed = String(url).trim();
+  const driveMatch = trimmed.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (driveMatch) return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w600`;
+  const idMatch = trimmed.match(/[?&]id=([^&]+)/);
+  if (trimmed.includes('drive.google.com') && idMatch) return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w600`;
+  return trimmed;
+}
+
+// 이미지 링크가 비어 있을 때 태그, 장르, 제목 순서로 카드의 대체 이모지를 고른다.
+function getBookEmoji(book) {
+  const tagText = tagsOf(book).join(' ');
+  const genreText = book.장르구분 || '';
+  const titleText = book.제목 || '';
+  const scopes = [tagText, genreText, titleText];
+
+  for (const scope of scopes) {
+    for (const [keyword, emoji] of EMOJI_RULES) {
+      if (scope.toLowerCase().includes(keyword.toLowerCase())) return emoji;
+    }
+  }
+  return '📚';
+}
+
+function tagEmoji(tag) {
+  const match = EMOJI_RULES.find(([keyword]) => tag.toLowerCase().includes(keyword.toLowerCase()));
+  return match?.[1] || '·';
+}
+
+function pickRarity(rarities) {
+  for (const grade of RARITY_ORDER) {
+    const config = rarities.find((rarity) => rarity.등급 === grade);
+    const denominator = Number(config?.확률분모);
+    if (denominator > 0 && Math.floor(Math.random() * denominator) === 0) {
+      return config;
+    }
+  }
+  return rarities.find((rarity) => rarity.등급 === '노멀') || DEFAULT_RARITIES.at(-1);
+}
+
+function readableColor(hex) {
+  if (!hex || !hex.startsWith('#')) return '#1d1a16';
+  const value = hex.replace('#', '');
+  const r = parseInt(value.slice(0, 2), 16);
+  const g = parseInt(value.slice(2, 4), 16);
+  const b = parseInt(value.slice(4, 6), 16);
+  return r * 0.299 + g * 0.587 + b * 0.114 > 150 ? '#1d1a16' : '#fffaf0';
+}
+
+function makeCard(book, rarity) {
+  return {
+    instanceId: `${book.id}-${rarity.등급}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    acquiredAt: new Date().toISOString(),
+    rarity: rarity.등급,
+    rarityLabel: rarity.표시명 || rarity.등급,
+    rarityDescription: rarity.설명 || '',
+    book,
+  };
+}
+
+function rarityConfigByGrade(grade) {
+  return DEFAULT_RARITIES.find((rarity) => rarity.등급 === grade) || DEFAULT_RARITIES.at(-1);
+}
+
+function rarityRank(grade) {
+  const index = RARITY_RANK.indexOf(grade);
+  return index === -1 ? 0 : index;
+}
+
+function nextRarity(grade) {
+  return RARITY_RANK[Math.min(rarityRank(grade) + 1, RARITY_RANK.length - 1)];
+}
+
+function randomRarityAbove(grade) {
+  const start = Math.min(rarityRank(grade) + 2, RARITY_RANK.length - 1);
+  const candidates = RARITY_RANK.slice(start);
+  return candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : nextRarity(grade);
+}
+
+function pickCombinationRarity(cards) {
+  const ranks = cards.map((card) => rarityRank(card.rarity));
+  const highestRank = Math.max(...ranks);
+  const highest = RARITY_RANK[highestRank];
+  const highestCount = ranks.filter((rank) => rank === highestRank).length;
+  const normalCount = ranks.filter((rank) => rank === 0).length;
+  const roll = Math.random() * 100;
+
+  if (highest === '노멀') {
+    if (roll < 1) return randomRarityAbove('스페셜');
+    if (roll < 6) return '스페셜';
+    return '노멀';
+  }
+
+  let downgradeChance = 0;
+  if (highest === '스페셜') {
+    if (normalCount === 2) downgradeChance = 5;
+    else if (normalCount === 1) downgradeChance = 3;
+  }
+
+  if (roll < downgradeChance) return '노멀';
+  if (roll < downgradeChance + 1) return randomRarityAbove(nextRarity(highest));
+  if (roll < downgradeChance + 6) return nextRarity(highest);
+  return highest;
+}
+
+function uniqueValues(items, selector) {
+  return [...new Set(items.map(selector).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'ko'));
+}
+
+function BookCard({ card, tagColors, compact = false }) {
+  const [flipped, setFlipped] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
+  const book = card.book;
+  const tags = tagsOf(book);
+  const mainColor = tagColors[tags[0]] || '#c7a76c';
+  const subColor = tagColors[tags[1]] || '#8fa6a3';
+  const pattern = tags.slice(0, 5).map(tagEmoji);
+  const titleLength = [...(book.제목 || '')].length;
+  const titleSizeClass = titleLength > 15 ? 'title-xs' : titleLength > 10 ? 'title-sm' : 'title-md';
+
+  return (
+    <button
+      type="button"
+      aria-label={`${book.제목} 카드 뒤집기`}
+      className={`card-shell ${compact ? 'scale-card-sm' : ''}`}
+      onClick={() => setFlipped((value) => !value)}
+    >
+      <div className={`flip-card ${flipped ? 'is-flipped' : ''}`}>
+        <div
+          className={`card-face card-front rarity-${card.rarity}`}
+          style={{
+            '--tag-main': mainColor,
+            '--tag-sub': subColor,
+          }}
+        >
+          <div className="pattern-emojis" aria-hidden="true">
+            {pattern.map((emoji, index) => (
+              <span key={`${emoji}-${index}`} className={`pattern-e pattern-${index}`}>{emoji}</span>
+            ))}
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className={`rarity-badge badge-${card.rarity}`}>{card.rarityLabel}</span>
+            <span className="text-[11px] font-black uppercase tracking-[0.18em] text-stone-600">K-Novel</span>
+          </div>
+          <div className="card-visual">
+            {book.이미지URL && !imageFailed ? (
+              <img src={book.이미지URL} alt={`${book.제목} 이미지`} loading="lazy" onError={() => setImageFailed(true)} />
+            ) : (
+              <span>{getBookEmoji(book)}</span>
+            )}
+          </div>
+          <div className="front-book-meta">
+            <p className={`front-title ${titleSizeClass}`}>{book.제목}</p>
+            <p className="front-meta-line">{[book.작가, book.출간년, book.출판사].filter(Boolean).join(' · ')}</p>
+          </div>
+        </div>
+
+        <div className="card-face card-back">
+          <div className="flex items-start justify-between gap-3 border-b border-dashed border-stone-400 pb-3 text-left">
+            <div>
+              <p className="text-sm font-black text-stone-900">{book.제목}</p>
+              <p className="mt-0.5 text-xs font-bold text-stone-600">{book.작가}</p>
+            </div>
+            <span className="rounded-full border border-stone-400 px-2 py-1 text-[10px] font-black text-stone-700">{card.rarityLabel}</span>
+          </div>
+          <div className="back-tag-row">
+            {tags.map((tag) => {
+              const color = tagColors[tag] || '#e6d7b7';
+              return (
+                <span
+                  key={tag}
+                  className="tag-chip"
+                  style={{ backgroundColor: color, color: readableColor(color) }}
+                >
+                  {tag}
+                </span>
+              );
+            })}
+          </div>
+          <div className="archive-lines">
+            <p className="archive-copy">{book.소개문}</p>
+          </div>
+          <div className="location-note">
+            <span>도서관 책 위치</span>
+            <strong>{book.확인메모 || '위치 메모 준비 중'}</strong>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function CapsuleMachine({ active }) {
+  return (
+    <div className={`machine ${active ? 'machine-active' : ''}`} aria-hidden="true">
+      <div className="machine-emoji">
+        <div className="emoji-top">흔들지 마세요</div>
+        <div className="emoji-window">
+          <span className="emoji-capsule cap-a" />
+          <span className="emoji-capsule cap-b" />
+          <span className="emoji-capsule cap-c" />
+        </div>
+        <div className="emoji-body">
+          <span className="emoji-coin">1COIN</span>
+          <span className="emoji-handle" />
+          <span className="emoji-tray" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReviewSection({ setCoins }) {
+  const [reviews, setReviews] = useLocalStorage('knovel-recommendations', []);
+  const [form, setForm] = useState({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    setReviews((current) =>
+      current.filter((review) => {
+        const text = `${review.title || ''} ${review.author || ''} ${review.reason || review.text || ''}`;
+        return !/혼모노|파과|0000|~~~/.test(text);
+      })
+    );
+  }, [setReviews]);
+
+  function submitReview(event) {
+    event.preventDefault();
+    const tags = [form.tag1, form.tag2, form.tag3].map((tag) => tag.trim()).filter(Boolean);
+    if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || tags.length < 3) {
+      setMessage('책 제목, 작가명, 추천 이유, 태그 3개를 모두 입력해 주세요.');
+      return;
+    }
+
+    const reward = 3;
+    setReviews((current) => [
+      {
+        id: Date.now(),
+        title: form.title.trim(),
+        author: form.author.trim(),
+        reason: form.reason.trim(),
+        tags,
+        reward,
+        createdAt: new Date().toISOString(),
+      },
+      ...current,
+    ]);
+    setCoins((current) => current + reward);
+    setMessage('추천이 저장되었습니다. 재화 3개를 받았습니다.');
+    setForm({ title: '', author: '', reason: '', tag1: '', tag2: '', tag3: '' });
+  }
+
+  return (
+    <section className="section-band" id="reviews">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow">Reader Notes</p>
+          <h2 className="section-title">내가 추천하는 한국 소설</h2>
+        </div>
+        <div className="reward-note">책을 추천하면 캡슐 재화 3개를 드립니다.</div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+        <form onSubmit={submitReview} className="review-form">
+          <input
+            className="field"
+            placeholder="책 제목"
+            value={form.title}
+            onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
+          />
+          <input
+            className="field"
+            placeholder="작가명"
+            value={form.author}
+            onChange={(event) => setForm((current) => ({ ...current, author: event.target.value }))}
+          />
+          <textarea
+            className="field min-h-36 resize-y"
+            placeholder="추천 이유"
+            value={form.reason}
+            onChange={(event) => setForm((current) => ({ ...current, reason: event.target.value }))}
+          />
+          <div className="grid gap-2 sm:grid-cols-3">
+            <input
+              className="field"
+              placeholder="태그 1"
+              value={form.tag1}
+              onChange={(event) => setForm((current) => ({ ...current, tag1: event.target.value }))}
+            />
+            <input
+              className="field"
+              placeholder="태그 2"
+              value={form.tag2}
+              onChange={(event) => setForm((current) => ({ ...current, tag2: event.target.value }))}
+            />
+            <input
+              className="field"
+              placeholder="태그 3"
+              value={form.tag3}
+              onChange={(event) => setForm((current) => ({ ...current, tag3: event.target.value }))}
+            />
+          </div>
+          <button type="submit" className="primary-button">추천 저장하고 재화 받기</button>
+          {message && <p className="text-sm font-bold text-emerald-800">{message}</p>}
+        </form>
+
+        <div className="review-list">
+          {reviews.length === 0 ? (
+            <p className="empty-copy">아직 추천한 소설이 없습니다. 좋아하는 한국 소설을 남기면 캡슐 3번이 돌아옵니다.</p>
+          ) : (
+            reviews.slice(0, 6).map((review) => (
+              <article key={review.id} className="review-item">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-black text-stone-900">{review.title}</h3>
+                  <span className="text-xs font-black text-stone-500">{review.author || '작가 미상'}</span>
+                </div>
+                <p className="mt-2 line-clamp-3 text-sm leading-6 text-stone-700">{review.reason || review.text}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {(review.tags || []).map((tag) => <span key={tag} className="rounded bg-stone-200 px-2 py-1 text-xs font-bold">{tag}</span>)}
+                </div>
+              </article>
+            ))
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [books, setBooks] = useState(SAMPLE_BOOKS);
+  const [tagColors, setTagColors] = useState(SAMPLE_TAG_COLORS);
+  const [rarities, setRarities] = useState(DEFAULT_RARITIES);
+  const [rewards, setRewards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadMessage, setLoadMessage] = useState('Google Sheets에서 목록을 불러오는 중입니다.');
+  const [coins, setCoins] = useLocalStorage('knovel-coins-test-130', STARTING_COINS);
+  const [collection, setCollection] = useLocalStorage('knovel-collection', []);
+  const [recent, setRecent] = useLocalStorage('knovel-recent', []);
+  const [result, setResult] = useState(null);
+  const [machineActive, setMachineActive] = useState(false);
+  const [gachaMessage, setGachaMessage] = useState('');
+  const [activeView, setActiveView] = useState('draw');
+  const [filterType, setFilterType] = useState('전체');
+  const [filterValue, setFilterValue] = useState('전체');
+  const [sortMode, setSortMode] = useState('draw-new');
+  const [selectedCombineIds, setSelectedCombineIds] = useState([]);
+  const [combineResult, setCombineResult] = useState(null);
+  const [pendingCombination, setPendingCombination] = useState(null);
+  const [combineAnimating, setCombineAnimating] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('knovel-storage-version') === STORAGE_VERSION) return;
+    [
+      'knovel-collection',
+      'knovel-recent',
+      'knovel-recommendations',
+      'knovel-coins-v2',
+      'knovel-coins',
+      'knovel-reviews',
+    ].forEach((key) => localStorage.removeItem(key));
+    localStorage.setItem('knovel-storage-version', STORAGE_VERSION);
+    window.location.reload();
+  }, []);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [bookRows, colorRows, rarityRows, rewardRows] = await Promise.all([
+          fetchSheet('Book_List'),
+          fetchSheet('Tag_Color_Map'),
+          fetchSheet('Rarity_Config'),
+          fetchSheet('Review_Rewards'),
+        ]);
+
+        const nextBooks = cleanBooks(bookRows);
+        const usableBooks = nextBooks.length ? nextBooks : SAMPLE_BOOKS;
+        setBooks(usableBooks);
+        setCollection((current) => refreshCardBooks(current, usableBooks));
+        setRecent((current) => refreshCardBooks(current, usableBooks));
+        setResult((current) => (current ? refreshCardBooks([current], usableBooks)[0] : current));
+        setTagColors({
+          ...SAMPLE_TAG_COLORS,
+          ...Object.fromEntries(colorRows.filter((row) => row.태그).map((row) => [row.태그, row.HEX || '#e6d7b7'])),
+        });
+        setRarities(DEFAULT_RARITIES);
+        setRewards(rewardRows);
+        setLoadMessage(nextBooks.length ? 'Google Sheets 동기화 완료' : '시트가 비어 있어 샘플 데이터를 사용 중입니다.');
+      } catch {
+        setBooks(SAMPLE_BOOKS);
+        setCollection((current) => refreshCardBooks(current, SAMPLE_BOOKS));
+        setRecent((current) => refreshCardBooks(current, SAMPLE_BOOKS));
+        setResult((current) => (current ? refreshCardBooks([current], SAMPLE_BOOKS)[0] : current));
+        setTagColors(SAMPLE_TAG_COLORS);
+        setRarities(DEFAULT_RARITIES);
+        setRewards([]);
+        setLoadMessage('Google Sheets 로딩 실패로 샘플 데이터를 사용 중입니다.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, []);
+
+  const uniqueCollected = useMemo(() => new Set(collection.map((card) => `${card.book.id}-${card.rarity}`)), [collection]);
+  const totalPossible = Math.max(books.length * DEFAULT_RARITIES.length, 1);
+  const collectionRate = Math.round((uniqueCollected.size / totalPossible) * 100);
+
+  const collectionFilterOptions = useMemo(() => {
+    if (filterType === '작가별') return uniqueValues(collection, (card) => card.book.작가);
+    if (filterType === '태그별') return uniqueValues(collection.flatMap((card) => tagsOf(card.book)), (tag) => tag);
+    if (filterType === '분류별') return uniqueValues(collection, (card) => card.book.장르구분);
+    if (filterType === '출판사별') return uniqueValues(collection, (card) => card.book.출판사);
+    if (filterType === '등급별') return RARITY_RANK.filter((rarity) => collection.some((card) => card.rarity === rarity));
+    return [];
+  }, [collection, filterType]);
+
+  const visibleCollection = useMemo(() => {
+    const filtered = collection.filter((card) => {
+      if (filterType === '전체' || filterValue === '전체') return true;
+      if (filterType === '작가별') return card.book.작가 === filterValue;
+      if (filterType === '태그별') return tagsOf(card.book).includes(filterValue);
+      if (filterType === '분류별') return card.book.장르구분 === filterValue;
+      if (filterType === '출판사별') return card.book.출판사 === filterValue;
+      if (filterType === '등급별') return card.rarity === filterValue;
+      return true;
+    });
+
+    return [...filtered].sort((a, b) => {
+      const yearA = Number(a.book.출간년) || 0;
+      const yearB = Number(b.book.출간년) || 0;
+      const dateA = new Date(a.acquiredAt || 0).getTime();
+      const dateB = new Date(b.acquiredAt || 0).getTime();
+      const rankA = RARITY_RANK.indexOf(a.rarity);
+      const rankB = RARITY_RANK.indexOf(b.rarity);
+      const safeRankA = rankA === -1 ? 0 : rankA;
+      const safeRankB = rankB === -1 ? 0 : rankB;
+
+      if (sortMode === 'year-desc') return yearB - yearA || dateB - dateA;
+      if (sortMode === 'year-asc') return yearA - yearB || dateB - dateA;
+      if (sortMode === 'draw-old') return dateA - dateB;
+      if (sortMode === 'rarity-desc') return safeRankB - safeRankA || dateB - dateA;
+      if (sortMode === 'rarity-asc') return safeRankA - safeRankB || dateB - dateA;
+      if (sortMode === 'title-asc') return a.book.제목.localeCompare(b.book.제목, 'ko');
+      if (sortMode === 'author-asc') return a.book.작가.localeCompare(b.book.작가, 'ko') || a.book.제목.localeCompare(b.book.제목, 'ko');
+      return dateB - dateA;
+    });
+  }, [collection, filterType, filterValue, sortMode]);
+
+  const combineCandidates = useMemo(() => {
+    const bestRankByBook = new Map();
+    collection.forEach((card) => {
+      const bookId = card.book?.id;
+      if (!bookId) return;
+      bestRankByBook.set(bookId, Math.max(bestRankByBook.get(bookId) ?? 0, rarityRank(card.rarity)));
+    });
+
+    return collection
+      .filter((card) => rarityRank(card.rarity) < (bestRankByBook.get(card.book?.id) ?? 0))
+      .sort((a, b) => rarityRank(a.rarity) - rarityRank(b.rarity) || new Date(a.acquiredAt || 0) - new Date(b.acquiredAt || 0));
+  }, [collection]);
+  const selectedCombineCards = selectedCombineIds
+    .map((id) => collection.find((card) => card.instanceId === id))
+    .filter(Boolean);
+
+  function drawGacha() {
+    if (coins <= 0) {
+      setGachaMessage('재화가 없습니다. 리뷰를 쓰면 다시 뽑을 수 있어요.');
+      return;
+    }
+    if (!books.length) {
+      setGachaMessage('불러온 책 데이터가 없습니다.');
+      return;
+    }
+
+    setCoins((current) => current - 1);
+    setMachineActive(true);
+    setGachaMessage('캡슐이 굴러오는 중...');
+    const pickedBook = books[Math.floor(Math.random() * books.length)];
+    const pickedRarity = pickRarity(rarities);
+    const nextCard = makeCard(pickedBook, pickedRarity);
+
+    window.setTimeout(() => {
+      setResult(nextCard);
+      setCollection((current) => [nextCard, ...current]);
+      setRecent((current) => [nextCard, ...current].slice(0, 3));
+      setMachineActive(false);
+      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급} ${pickedBook.제목} 획득`);
+    }, 760);
+  }
+
+  function changeFilterType(value) {
+    setFilterType(value);
+    setFilterValue('전체');
+  }
+
+  function toggleCombineCard(card) {
+    if (combineAnimating || pendingCombination) return;
+    setCombineResult(null);
+    setSelectedCombineIds((current) => {
+      if (current.includes(card.instanceId)) return current.filter((id) => id !== card.instanceId);
+      if (current.length >= 3) return current;
+      return [...current, card.instanceId];
+    });
+  }
+
+  function combineCards() {
+    if (selectedCombineCards.length !== 3 || combineAnimating || pendingCombination) return;
+    const ingredients = selectedCombineCards;
+    const resultGrade = pickCombinationRarity(ingredients);
+    const resultBook = books[Math.floor(Math.random() * books.length)] || ingredients[Math.floor(Math.random() * ingredients.length)].book;
+    const nextCard = makeCard(resultBook, rarityConfigByGrade(resultGrade));
+
+    setCombineAnimating(true);
+    setCombineResult(null);
+    window.setTimeout(() => {
+      setCombineResult(nextCard);
+      setPendingCombination({ result: nextCard, consumedIds: ingredients.map((card) => card.instanceId) });
+      setCombineAnimating(false);
+    }, 980);
+  }
+
+  function acceptCombination() {
+    if (!pendingCombination) return;
+    const consumed = new Set(pendingCombination.consumedIds);
+    const nextCard = pendingCombination.result;
+    setCollection((current) => [nextCard, ...current.filter((card) => !consumed.has(card.instanceId))]);
+    setRecent((current) => [nextCard, ...current].slice(0, 3));
+    setCombineResult(null);
+    setPendingCombination(null);
+    setSelectedCombineIds([]);
+  }
+
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#f4eddc] text-stone-950">
+      <div className="paper-grain" />
+      <header className="sticky top-0 z-30 border-b border-stone-900/10 bg-[#f4eddc]/88 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+          <div>
+            <p className="eyebrow">Capsule Literature Archive</p>
+            <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
+          </div>
+          <div className="flex items-center gap-2 text-right">
+            <div className="status-pill">재화 {coins}</div>
+            <div className="status-pill">수집률 {collectionRate}%</div>
+          </div>
+        </div>
+        <nav className="mx-auto flex max-w-7xl gap-2 px-4 pb-4 sm:px-6" aria-label="페이지 탭">
+          <button type="button" className={`tab-button ${activeView === 'draw' ? 'tab-button-active' : ''}`} onClick={() => setActiveView('draw')}>
+            소설뽑기
+          </button>
+          <button type="button" className={`tab-button ${activeView === 'collection' ? 'tab-button-active' : ''}`} onClick={() => setActiveView('collection')}>
+            컬렉션 보기
+          </button>
+          <button type="button" className={`tab-button ${activeView === 'combine' ? 'tab-button-active' : ''}`} onClick={() => setActiveView('combine')}>
+            조합하기
+          </button>
+        </nav>
+      </header>
+
+      {activeView === 'draw' ? (
+        <>
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:py-12">
+        <div className="flex flex-col justify-center">
+          <p className="eyebrow">{loading ? 'Loading' : loadMessage}</p>
+          <h2 className="mt-3 max-w-xl whitespace-nowrap text-[clamp(2.05rem,5.6vw,3.65rem)] font-black leading-tight">
+            한국 소설 카드를 모아보세요.
+          </h2>
+        </div>
+
+        <div className="gacha-stage">
+          <CapsuleMachine active={machineActive} />
+          <div className="machine-actions">
+            <button type="button" className="primary-button" onClick={drawGacha}>캡슐 뽑기</button>
+            <p>{gachaMessage || '뽑기에는 코인 1개가 필요합니다.'}</p>
+          </div>
+          <div className="result-slot">
+            {result ? (
+              <div key={result.instanceId} className="card-enter">
+                <BookCard card={result} tagColors={tagColors} />
+              </div>
+            ) : (
+              <div className="empty-card">
+                <span className="text-6xl">📚</span>
+                <p>캡슐 안의 소설을 기다리는 중</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-band">
+        <div className="section-head">
+          <div>
+            <p className="eyebrow">Recent Pulls</p>
+            <h2 className="section-title">최근 뽑은 카드 3장</h2>
+          </div>
+        </div>
+        <div className="recent-row">
+          {recent.length === 0 ? (
+            <p className="empty-copy">아직 최근 카드가 없습니다.</p>
+          ) : recent.map((card) => (
+            <BookCard key={card.instanceId} card={card} tagColors={tagColors} compact />
+          ))}
+        </div>
+      </section>
+      <ReviewSection setCoins={setCoins} />
+        </>
+      ) : activeView === 'collection' ? (
+
+      <section className="section-band collection-view" id="collection">
+        <div className="section-head">
+          <div>
+            <p className="eyebrow">Collection</p>
+            <h2 className="section-title">카드 컬렉션</h2>
+          </div>
+          <div className="status-pill">{uniqueCollected.size} / {totalPossible} 조합</div>
+        </div>
+
+        <div className="filter-bar">
+          <select className="field" value={sortMode} onChange={(event) => setSortMode(event.target.value)}>
+            <option value="draw-new">최신순</option>
+            <option value="draw-old">오래된순</option>
+            <option value="year-desc">출간년 내림차순</option>
+            <option value="year-asc">출간년 오름차순</option>
+            <option value="rarity-desc">등급순 내림차순</option>
+            <option value="rarity-asc">등급순 오름차순</option>
+            <option value="title-asc">도서명 가나다순</option>
+            <option value="author-asc">작가명 가나다순</option>
+          </select>
+          <select className="field" value={filterType} onChange={(event) => changeFilterType(event.target.value)}>
+            {['전체', '작가별', '태그별', '등급별', '분류별', '출판사별'].map((type) => <option key={type}>{type}</option>)}
+          </select>
+          {filterType !== '전체' && (
+            <select className="field" value={filterValue} onChange={(event) => setFilterValue(event.target.value)}>
+              <option>전체</option>
+              {collectionFilterOptions.map((option) => <option key={option}>{option}</option>)}
+            </select>
+          )}
+        </div>
+
+        {visibleCollection.length === 0 ? (
+          <div className="collection-empty">
+            <span>📖</span>
+            <p>아직 조건에 맞는 카드가 없습니다. 캡슐을 돌려 첫 장을 채워보세요.</p>
+          </div>
+        ) : (
+          <div className="collection-grid">
+            {visibleCollection.map((card) => (
+              <BookCard key={card.instanceId} card={card} tagColors={tagColors} compact />
+            ))}
+          </div>
+        )}
+      </section>
+      ) : (
+      <section className="section-band collection-view">
+        <div className="section-head">
+          <div>
+            <p className="eyebrow">Fusion Desk</p>
+            <h2 className="section-title">카드 조합하기</h2>
+          </div>
+          <div className="status-pill">중복 3장 → 1장</div>
+        </div>
+
+        <div className="combine-layout">
+          <div className="combine-panel">
+            <p className="reward-note">
+              남는 카드 3장을 골라 조합합니다. 같은 책에서 보유한 최고 등급 카드는 보호하고, 낮은 등급 카드만 정리 대상으로 보여줍니다.
+            </p>
+            <div className="status-pill combine-count">{selectedCombineCards.length} / 3장 선택</div>
+            <div className="combine-picker">
+              {combineCandidates.length === 0 ? (
+                <p className="empty-copy">정리할 남는 카드가 아직 없습니다. 같은 책의 더 높은 등급을 보유하면 낮은 등급 카드가 여기에 표시됩니다.</p>
+              ) : combineCandidates.map((card) => (
+                <button
+                  type="button"
+                  key={card.instanceId}
+                  className={`combine-pick ${selectedCombineIds.includes(card.instanceId) ? 'combine-pick-on' : ''}`}
+                  onClick={() => toggleCombineCard(card)}
+                >
+                  <span>{card.book.제목}</span>
+                  <strong>{card.rarity}</strong>
+                </button>
+              ))}
+            </div>
+            <button type="button" className="primary-button" onClick={combineCards} disabled={selectedCombineCards.length !== 3 || combineAnimating}>
+              {combineAnimating ? '조합 중...' : '선택한 3장 조합하기'}
+            </button>
+          </div>
+
+          <div className={`combine-stage ${combineAnimating ? 'is-combining' : ''}`}>
+            {selectedCombineCards.length > 0 ? (
+              <>
+                <div className="combine-stack">
+                  {selectedCombineCards.map((card, index) => (
+                    <div className={`combine-mini combine-mini-${index}`} key={card.instanceId}>
+                      <BookCard card={card} tagColors={tagColors} compact />
+                    </div>
+                  ))}
+                </div>
+                <div className="combine-arrow">→</div>
+                <div className="combine-output">
+                  {combineResult ? (
+                    <div className="combine-result-box">
+                      <BookCard card={combineResult} tagColors={tagColors} compact />
+                      <div className="combine-result-meta">
+                        <strong>{combineResult.rarityLabel} 획득</strong>
+                        <span>{combineResult.book.제목}</span>
+                        {pendingCombination && (
+                          <button type="button" className="primary-button accept-button" onClick={acceptCombination}>받기</button>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="empty-card combine-placeholder">
+                      <span className="text-5xl">✨</span>
+                      <p>조합 결과 대기 중</p>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="collection-empty">
+                <span>🃏</span>
+                <p>왼쪽 목록에서 남는 카드 3장을 골라주세요.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      )}
+    </main>
+  );
+}
+
+createRoot(document.getElementById('root')).render(<App />);
