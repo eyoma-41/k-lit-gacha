@@ -231,7 +231,7 @@ function normalizeImageUrl(value) {
   const trimmed = String(value).trim();
   if (trimmed.startsWith('http')) return trimmed;
   if (trimmed.startsWith('/')) return trimmed;
-  return `/covers/${trimmed}`;
+  return `/cover/${trimmed}`;
 }
 
 // 이미지 링크가 비어 있을 때 태그, 장르, 제목 순서로 카드의 대체 이모지를 고른다.
