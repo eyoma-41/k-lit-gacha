@@ -683,6 +683,7 @@ function App() {
     .filter(Boolean);
 
   function drawGacha() {
+    setDailyRewardMessage('');
     if (coins <= 0) {
       setGachaMessage('토큰이 없습니다. 독서 기록을 쓰면 다시 뽑을 수 있어요.');
       return;
