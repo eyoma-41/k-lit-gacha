@@ -1109,7 +1109,60 @@ main > *:not(.paper-grain) {
 
   .result-slot .card-front,
   .result-slot .card-back {
-    padding: 10px;
+    padding: 8px;
+  }
+
+  .result-slot .card-back .text-sm {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .result-slot .card-back .text-xs {
+    font-size: 9px;
+    line-height: 1.25;
+  }
+
+  .result-slot .card-back .rounded-full {
+    padding: 4px 6px;
+    font-size: 9px;
+  }
+
+  .result-slot .back-tag-row {
+    max-height: 36px;
+    overflow: auto;
+    gap: 3px;
+    padding: 5px 0;
+  }
+
+  .result-slot .tag-chip {
+    padding: 2px 5px;
+    font-size: 8px;
+  }
+
+  .result-slot .archive-lines {
+    margin-top: 6px;
+    min-height: 44px;
+    padding: 2px 2px 5px;
+  }
+
+  .result-slot .archive-copy {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .result-slot .location-note {
+    margin-top: 6px;
+    padding: 6px 8px;
+  }
+
+  .result-slot .location-note span {
+    margin-bottom: 2px;
+    font-size: 8px;
+  }
+
+  .result-slot .location-note strong {
+    font-size: 10px;
+    line-height: 1.35;
   }
 
   .result-slot .card-visual {
