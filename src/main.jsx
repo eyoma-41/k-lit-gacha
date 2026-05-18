@@ -621,8 +621,8 @@ function App() {
     loadData();
   }, []);
 
-  const uniqueCollected = useMemo(() => new Set(collection.map((card) => `${card.book.id}-${card.rarity}`)), [collection]);
-  const totalPossible = Math.max(books.length * DEFAULT_RARITIES.length, 1);
+  const uniqueCollected = useMemo(() => new Set(collection.map((card) => String(card.book.id))), [collection]);
+  const totalPossible = Math.max(books.length, 1);
   const collectionRate = Math.round((uniqueCollected.size / totalPossible) * 100);
 
   const collectionFilterOptions = useMemo(() => {
@@ -780,10 +780,10 @@ function App() {
 
       {activeView === 'draw' ? (
         <>
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:py-12">
+      <section className="hero-section mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:py-12">
         <div className="flex flex-col justify-center">
           <p className="eyebrow">{loading ? 'Loading' : loadMessage}</p>
-          <h2 className="mt-3 max-w-xl whitespace-nowrap text-[clamp(2.05rem,5.6vw,3.65rem)] font-black leading-tight">
+          <h2 className="mt-3 font-black leading-tight">
             한국 소설 카드를 모아보세요.
           </h2>
           <p className="image-credit">이미지 출처: 알라딘</p>
@@ -875,6 +875,15 @@ function App() {
             ))}
           </div>
         )}
+        <section className="selection-criteria">
+          <h3>도서 선정 기준</h3>
+          <ol>
+            <li>주로 2010~2020년대에 출간된 한국 소설을 선정했고, 최근 3년간 출간된 도서를 높은 비중으로 리스트에 포함했다. 또한 이전 출간작 중 여전히 사랑을 받는 작품들은 포함시켰다.</li>
+            <li>출판년과 출판사는 초판을 기준으로 작성하였다. 현재는 표지나 출판사가 다를 수 있다.</li>
+            <li>도서 카드는 추후 업데이트 될 수 있다.</li>
+            <li>수집률은 등급과 무관하게 같은 도서를 한 번 이상 획득했을 때 수집한 것으로 계산한다.</li>
+          </ol>
+        </section>
       </section>
       ) : (
       <section className="section-band collection-view">
@@ -952,6 +961,11 @@ function App() {
           </div>
         </div>
       </section>
+      )}
+      {activeView === 'draw' && (
+        <footer className="site-disclaimer">
+          이 페이지는 도서관 교육 프로그램 및 독서 활동 안내를 위한 비상업적 서비스입니다. 도서 표지 이미지는 도서 소개를 위한 참고 자료로 사용되며, 저작권은 각 출판사 및 권리자에게 있습니다. 도서 정보 일부는 알라딘을 참고했으며, 각 도서의 상세 정보는 연결된 도서 페이지에서 확인할 수 있습니다. 본 페이지의 이미지 및 자료는 무단 복제·배포·상업적 이용을 금합니다.
+        </footer>
       )}
     </main>
   );

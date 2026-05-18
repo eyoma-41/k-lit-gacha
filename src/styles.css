@@ -124,6 +124,15 @@ main > *:not(.paper-grain) {
   font-weight: 800;
 }
 
+.hero-section {
+  align-items: center;
+}
+
+.hero-section h2 {
+  max-width: min(100%, 42rem);
+  font-size: clamp(2.1rem, 4.4vw, 4.4rem);
+}
+
 .gacha-stage {
   position: relative;
   min-height: 530px;
@@ -709,6 +718,48 @@ main > *:not(.paper-grain) {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 18px;
   align-items: start;
+}
+
+.selection-criteria,
+.site-disclaimer {
+  border: 1px solid rgba(28, 25, 23, 0.12);
+  background: rgba(255, 250, 240, 0.58);
+  color: #57534e;
+}
+
+.selection-criteria {
+  margin-top: 34px;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.selection-criteria h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 1000;
+  color: #1c1917;
+}
+
+.selection-criteria ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.selection-criteria li {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.75;
+}
+
+.site-disclaimer {
+  max-width: 1280px;
+  margin: 0 auto 34px;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.7;
 }
 
 .collection-empty,
