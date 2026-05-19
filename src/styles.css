@@ -357,6 +357,12 @@ main > *:not(.paper-grain) {
   padding: 13px;
 }
 
+.scale-card-sm .card-visual {
+  width: 148px;
+  height: 148px;
+  margin-top: 12px;
+}
+
 .scale-card-sm .back-tag-row {
   max-height: 44px;
   overflow: auto;
@@ -456,34 +462,32 @@ main > *:not(.paper-grain) {
   z-index: 1;
   display: grid;
   flex: 0 0 auto;
-  min-height: 0;
-  padding: 12px 0 10px;
+  width: 166px;
+  height: 166px;
+  margin: 14px auto 12px;
+  overflow: hidden;
   place-items: center;
+  border: 3px solid rgba(28, 25, 23, 0.82);
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.62);
+  box-shadow: inset 0 0 0 8px rgba(255, 250, 240, 0.32), 0 12px 22px rgba(28, 25, 23, 0.12);
   text-align: center;
 }
 
 .card-visual span {
   display: grid;
-  width: 132px;
-  height: 132px;
+  width: 100%;
+  height: 100%;
   place-items: center;
-  border: 3px solid rgba(28, 25, 23, 0.82);
-  border-radius: 50%;
-  background: rgba(255, 250, 240, 0.62);
   font-size: 78px;
-  box-shadow: inset 0 0 0 8px rgba(255, 250, 240, 0.48);
 }
 
 .card-visual img {
   display: block;
-  width: min(166px, 82%);
-  height: 166px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   object-position: center;
-  border: 3px solid rgba(28, 25, 23, 0.82);
-  border-radius: 14px;
-  background: rgba(255, 250, 240, 0.62);
-  box-shadow: inset 0 0 0 8px rgba(255, 250, 240, 0.48), 0 12px 22px rgba(28, 25, 23, 0.12);
 }
 
 .front-book-meta {
@@ -1287,18 +1291,19 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    padding: 8px 0 6px;
+    width: 102px;
+    height: 102px;
+    margin: 8px auto 7px;
+    border-radius: 10px;
   }
 
   .result-slot .card-visual span {
-    width: 82px;
-    height: 82px;
     font-size: 48px;
   }
 
   .result-slot .card-visual img {
-    width: 102px;
-    height: 102px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
   }
 
@@ -1336,15 +1341,20 @@ main > *:not(.paper-grain) {
     padding: 9px;
   }
 
-  .collection-grid .card-visual img {
+  .collection-grid .card-visual {
     width: min(110px, 76%);
     height: 110px;
+    margin: 8px auto 8px;
+    border-radius: 10px;
+  }
+
+  .collection-grid .card-visual img {
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
   }
 
   .collection-grid .card-visual span {
-    width: 84px;
-    height: 84px;
     font-size: 48px;
   }
 
@@ -1392,7 +1402,7 @@ main > *:not(.paper-grain) {
     font-size: 64px;
   }
 
-  .card-visual img {
+  .card-visual {
     width: 132px;
     height: 132px;
   }
