@@ -359,7 +359,7 @@ main > *:not(.paper-grain) {
 
 .scale-card-sm .card-visual {
   width: 148px;
-  height: 148px;
+  height: 166px;
   margin-top: 12px;
 }
 
@@ -463,7 +463,7 @@ main > *:not(.paper-grain) {
   display: grid;
   flex: 0 0 auto;
   width: 166px;
-  height: 166px;
+  height: 186px;
   margin: 14px auto 12px;
   overflow: hidden;
   place-items: center;
@@ -749,6 +749,49 @@ main > *:not(.paper-grain) {
   border-radius: 50%;
   background: color-mix(in srgb, var(--rarity-text), transparent 18%);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--rarity-text), transparent 78%);
+}
+
+.rarity-ladder .rarity-tier {
+  animation: none;
+  background-image: none;
+  background-color: var(--rarity-color);
+  color: var(--rarity-text);
+  border-color: color-mix(in srgb, var(--rarity-color), #1c1917 38%);
+}
+
+.rarity-ladder .rarity-노멀 {
+  --rarity-color: #8b8378;
+  --rarity-text: #fffaf0;
+}
+
+.rarity-ladder .rarity-스페셜 {
+  --rarity-color: #20a464;
+  --rarity-text: #fff;
+}
+
+.rarity-ladder .rarity-레어 {
+  --rarity-color: #2f80ed;
+  --rarity-text: #fff;
+}
+
+.rarity-ladder .rarity-스페셜레어 {
+  --rarity-color: #8b5cf6;
+  --rarity-text: #fff;
+}
+
+.rarity-ladder .rarity-울트라레어 {
+  --rarity-color: #f97316;
+  --rarity-text: #fff;
+}
+
+.rarity-ladder .rarity-슈퍼레어 {
+  --rarity-color: #d4a017;
+  --rarity-text: #1c1917;
+}
+
+.rarity-ladder .rarity-마스터피스 {
+  --rarity-color: #e11d48;
+  --rarity-text: #fff;
 }
 
 .field {
@@ -1292,7 +1335,7 @@ main > *:not(.paper-grain) {
 
   .result-slot .card-visual {
     width: 102px;
-    height: 102px;
+    height: 116px;
     margin: 8px auto 7px;
     border-radius: 10px;
   }
@@ -1343,7 +1386,7 @@ main > *:not(.paper-grain) {
 
   .collection-grid .card-visual {
     width: min(110px, 76%);
-    height: 110px;
+    height: 124px;
     margin: 8px auto 8px;
     border-radius: 10px;
   }
@@ -1404,7 +1447,7 @@ main > *:not(.paper-grain) {
 
   .card-visual {
     width: 132px;
-    height: 132px;
+    height: 148px;
   }
 
   .front-title {
