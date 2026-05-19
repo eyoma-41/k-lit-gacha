@@ -358,7 +358,6 @@ function BookCard({ card, tagColors, compact = false }) {
   const pattern = tags.slice(0, 5).map(tagEmoji);
   const titleLength = [...(book.제목 || '')].length;
   const titleSizeClass = titleLength > 15 ? 'title-xs' : titleLength > 10 ? 'title-sm' : 'title-md';
-  const rarityLevel = Math.max(1, rarityRank(card.rarity) + 1);
 
   return (
     <button
@@ -383,15 +382,6 @@ function BookCard({ card, tagColors, compact = false }) {
           <div className="flex items-center justify-between gap-3">
             <span className={`rarity-badge badge-${card.rarity}`}>{card.rarityLabel}</span>
             <span className="text-[11px] font-black uppercase tracking-[0.18em] text-stone-600">K-Novel</span>
-          </div>
-          <div className="rarity-signal" aria-hidden="true">
-            <span className="rarity-signal-line" />
-            <span className="rarity-stars">
-              {Array.from({ length: rarityLevel }).map((_, index) => (
-                <span key={index} className="rarity-star">★</span>
-              ))}
-            </span>
-            <span className="rarity-signal-line" />
           </div>
           <div className="card-visual">
             {book.이미지URL && !imageFailed ? (
@@ -497,7 +487,7 @@ function ReadingRecordSection({ setCoins }) {
       <div className="section-head">
         <div>
           <p className="eyebrow">Reader Notes</p>
-          <h2 className="section-title">나만의 한국 소설 독서기록장</h2>
+          <h2 className="section-title">나만의 한국소설 독서기록장</h2>
         </div>
         <div className="reward-note">독서 기록을 남기면 토큰 3개를 드립니다.</div>
       </div>
@@ -768,7 +758,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>
             <p className="eyebrow">Capsule Literature Archive</p>
-            <h1 className="text-2xl font-black sm:text-3xl">한국 소설 뽑기</h1>
+            <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
           </div>
           <div className="flex items-center gap-2 text-right">
             <div className="status-pill">토큰 {coins}</div>
