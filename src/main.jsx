@@ -435,8 +435,10 @@ function CapsuleMachine({ active }) {
   return (
     <div className={`machine ${active ? 'machine-active' : ''}`} aria-hidden="true">
       <div className="machine-emoji">
-        <div className="emoji-top">흔들지 마세요</div>
+        <div className="emoji-top">K-NOVEL CAPSULE</div>
         <div className="emoji-window">
+          <span className="machine-poster poster-a" />
+          <span className="machine-poster poster-b" />
           <span className="emoji-capsule cap-a" />
           <span className="emoji-capsule cap-b" />
           <span className="emoji-capsule cap-c" />
@@ -445,6 +447,7 @@ function CapsuleMachine({ active }) {
           <span className="emoji-coin">1COIN</span>
           <span className="emoji-handle" />
           <span className="emoji-tray" />
+          <span className="capsule-drop" />
         </div>
       </div>
     </div>
@@ -487,7 +490,7 @@ function ReadingRecordSection({ setCoins }) {
       <div className="section-head">
         <div>
           <p className="eyebrow">Reader Notes</p>
-          <h2 className="section-title">나만의 한국 소설 독서기록장</h2>
+          <h2 className="section-title">나만의 한국소설 독서기록장</h2>
         </div>
         <div className="reward-note">독서 기록을 남기면 토큰 3개를 드립니다.</div>
       </div>
@@ -758,7 +761,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>
             <p className="eyebrow">Capsule Literature Archive</p>
-            <h1 className="text-2xl font-black sm:text-3xl">한국 소설 뽑기</h1>
+            <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
           </div>
           <div className="flex items-center gap-2 text-right">
             <div className="status-pill">토큰 {coins}</div>
