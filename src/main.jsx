@@ -487,7 +487,7 @@ function ReadingRecordSection({ setCoins }) {
       <div className="section-head">
         <div>
           <p className="eyebrow">Reader Notes</p>
-          <h2 className="section-title">나만의 한국소설 독서기록장</h2>
+          <h2 className="section-title">나만의 한국 소설 독서기록장</h2>
         </div>
         <div className="reward-note">독서 기록을 남기면 토큰 3개를 드립니다.</div>
       </div>
@@ -758,7 +758,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>
             <p className="eyebrow">Capsule Literature Archive</p>
-            <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
+            <h1 className="text-2xl font-black sm:text-3xl">한국 소설 뽑기</h1>
           </div>
           <div className="flex items-center gap-2 text-right">
             <div className="status-pill">토큰 {coins}</div>
