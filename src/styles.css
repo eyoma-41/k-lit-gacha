@@ -1362,13 +1362,12 @@ main > *:not(.paper-grain) {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: minmax(142px, 0.92fr) minmax(158px, 1fr);
+    grid-template-columns: 1fr;
     align-items: center;
     justify-items: center;
-    column-gap: 10px;
-    row-gap: 14px;
+    row-gap: 18px;
     overflow: hidden;
-    padding: 18px 12px 22px;
+    padding: 22px 12px 28px;
   }
 
   .gacha-stage::before {
@@ -1382,10 +1381,10 @@ main > *:not(.paper-grain) {
     left: auto;
     top: auto;
     order: 2;
-    justify-self: end;
-    transform: scale(0.62);
-    transform-origin: center;
-    margin: -58px -34px -58px -52px;
+    justify-self: center;
+    transform: scale(0.72);
+    transform-origin: top center;
+    margin: 0 0 -82px;
   }
 
   .machine-actions {
@@ -1420,7 +1419,7 @@ main > *:not(.paper-grain) {
     right: auto;
     top: auto;
     order: 3;
-    justify-self: start;
+    justify-self: center;
     transform: none;
     transform-origin: center;
   }
