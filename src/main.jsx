@@ -457,7 +457,10 @@ function CapsuleMachine({ active, onDraw }) {
         <div className="emoji-body">
           <span className="emoji-coin">1COIN</span>
           <span className="emoji-handle" />
-          <button type="button" className="emoji-tray" onClick={onDraw}>캡슐 뽑기</button>
+          <button type="button" className="emoji-tray" onClick={onDraw}>
+            <span>캡슐</span>
+            <span>뽑기</span>
+          </button>
           <span className="capsule-drop" />
         </div>
       </div>

@@ -373,10 +373,14 @@ main > *:not(.paper-grain) {
   text-align: center;
   font-size: 13px;
   font-weight: 1000;
-  line-height: 1.15;
+  line-height: 1.08;
   cursor: pointer;
   box-shadow: 0 5px 0 rgba(28, 25, 23, 0.22);
   transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.emoji-tray span {
+  display: block;
 }
 
 .emoji-tray:hover {
