@@ -317,10 +317,10 @@ main > *:not(.paper-grain) {
 
 .emoji-handle {
   position: absolute;
-  right: 23px;
-  top: 64px;
-  width: 66px;
-  height: 66px;
+  right: 13px;
+  top: 58px;
+  width: 78px;
+  height: 78px;
   border: 6px solid #1c1917;
   border-radius: 50%;
   background:
@@ -332,10 +332,10 @@ main > *:not(.paper-grain) {
 .emoji-handle::after {
   content: "";
   position: absolute;
-  left: 6px;
-  top: 25px;
-  width: 31px;
-  height: 12px;
+  left: 8px;
+  top: 31px;
+  width: 38px;
+  height: 14px;
   border-radius: 999px;
   background: #fffdf5;
   border: 3px solid rgba(28, 25, 23, 0.72);
@@ -371,15 +371,15 @@ main > *:not(.paper-grain) {
 
 .capsule-drop {
   position: absolute;
-  left: 39px;
-  bottom: 43px;
-  width: 34px;
-  height: 34px;
+  left: 34px;
+  bottom: 38px;
+  width: 46px;
+  height: 46px;
   border: 3px solid #1c1917;
   border-radius: 50%;
   background: linear-gradient(90deg, #ef6f6c 50%, #fffaf0 50%);
   opacity: 0;
-  transform: translate(54px, -32px) rotate(0deg) scale(0.7);
+  transform: translate(64px, -38px) rotate(0deg) scale(0.68);
 }
 
 .machine-active .capsule-drop {
@@ -1258,19 +1258,19 @@ main > *:not(.paper-grain) {
 @keyframes capsuleRoll {
   0% {
     opacity: 0;
-    transform: translate(54px, -32px) rotate(0deg) scale(0.7);
+    transform: translate(64px, -38px) rotate(0deg) scale(0.68);
   }
   24% {
     opacity: 1;
-    transform: translate(18px, -12px) rotate(120deg) scale(0.9);
+    transform: translate(26px, -18px) rotate(120deg) scale(0.9);
   }
   66% {
     opacity: 1;
-    transform: translate(-4px, 6px) rotate(300deg) scale(1);
+    transform: translate(-3px, 8px) rotate(300deg) scale(1);
   }
   100% {
     opacity: 1;
-    transform: translate(-14px, 10px) rotate(380deg) scale(1);
+    transform: translate(-18px, 12px) rotate(380deg) scale(1);
   }
 }
 
