@@ -476,9 +476,10 @@ main > *:not(.paper-grain) {
 
 .card-visual img {
   display: block;
-  width: min(154px, 78%);
-  height: 176px;
+  width: min(166px, 82%);
+  height: 166px;
   object-fit: contain;
+  object-position: center;
   border: 3px solid rgba(28, 25, 23, 0.82);
   border-radius: 14px;
   background: rgba(255, 250, 240, 0.62);
@@ -1296,8 +1297,8 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual img {
-    width: 96px;
-    height: 112px;
+    width: 102px;
+    height: 102px;
     border-radius: 10px;
   }
 
@@ -1336,8 +1337,8 @@ main > *:not(.paper-grain) {
   }
 
   .collection-grid .card-visual img {
-    width: min(96px, 72%);
-    height: 112px;
+    width: min(110px, 76%);
+    height: 110px;
     border-radius: 10px;
   }
 
@@ -1393,7 +1394,7 @@ main > *:not(.paper-grain) {
 
   .card-visual img {
     width: 132px;
-    height: 150px;
+    height: 132px;
   }
 
   .front-title {
