@@ -160,7 +160,7 @@ main > *:not(.paper-grain) {
   position: absolute;
   left: clamp(26px, 5vw, 58px);
   top: 50%;
-  width: 270px;
+  width: 286px;
   transform: translateY(-50%);
   transform-origin: 50% 78%;
   filter: drop-shadow(0 20px 24px rgba(28, 25, 23, 0.18));
@@ -193,19 +193,22 @@ main > *:not(.paper-grain) {
 
 .machine-emoji {
   position: relative;
-  width: 270px;
-  height: 372px;
+  width: 286px;
+  height: 416px;
 }
 
 .emoji-top {
-  position: relative;
+  position: absolute;
+  left: 18px;
+  top: 0;
   z-index: 3;
-  margin: 0 auto -10px;
-  width: 230px;
+  width: 250px;
+  height: 56px;
   border: 5px solid #1c1917;
-  border-radius: 20px 20px 8px 8px;
-  background: linear-gradient(180deg, #fffdf5, #eee7d7);
-  padding: 9px 10px;
+  border-bottom: 0;
+  border-radius: 34px 34px 8px 8px;
+  background: linear-gradient(180deg, #ffffff, #f1efe7);
+  padding: 15px 12px 8px;
   text-align: center;
   font-size: 13px;
   font-weight: 1000;
@@ -215,16 +218,17 @@ main > *:not(.paper-grain) {
 
 .emoji-window {
   position: absolute;
-  left: 18px;
-  top: 42px;
-  width: 234px;
-  height: 178px;
+  left: 13px;
+  top: 50px;
+  width: 260px;
+  height: 164px;
   overflow: hidden;
   border: 7px solid #1c1917;
-  border-radius: 26px 26px 12px 12px;
+  border-radius: 18px 18px 28px 28px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.88), transparent 44%),
-    radial-gradient(circle at 50% 72%, rgba(232, 243, 247, 0.96), rgba(164, 184, 193, 0.72));
+    linear-gradient(90deg, rgba(255, 255, 255, 0.7), transparent 18% 82%, rgba(117, 72, 45, 0.18)),
+    radial-gradient(circle at 82% 60%, rgba(239, 78, 68, 0.88) 0 31px, transparent 33px),
+    linear-gradient(180deg, #bfe6f6, #eaf5f2);
 }
 
 .emoji-window::after {
@@ -238,25 +242,32 @@ main > *:not(.paper-grain) {
 
 .machine-poster {
   position: absolute;
-  top: 15px;
-  width: 58px;
-  height: 92px;
-  border: 3px solid rgba(28, 25, 23, 0.72);
-  border-radius: 8px;
+  top: 18px;
+  width: 112px;
+  height: 118px;
+  border: 0;
+  border-radius: 4px;
   background:
-    linear-gradient(180deg, rgba(255, 250, 240, 0.9), rgba(255, 250, 240, 0.4)),
-    repeating-linear-gradient(0deg, #ef6f6c 0 12px, #3aaed8 12px 24px, #d9ae56 24px 36px);
-  opacity: 0.46;
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.82) 0 34px, transparent 35px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0 56%, rgba(255, 255, 255, 0.72) 57%),
+    repeating-radial-gradient(circle at 50% 42%, rgba(36, 79, 156, 0.18) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #8cd1ef, #fffdf5);
+  opacity: 0.9;
 }
 
 .poster-a {
-  left: 26px;
-  transform: rotate(-6deg);
+  left: 72px;
+  transform: rotate(0deg);
 }
 
 .poster-b {
-  right: 25px;
-  transform: rotate(5deg);
+  right: 16px;
+  width: 66px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(circle at 65% 62%, rgba(239, 78, 68, 0.9) 0 36px, transparent 37px);
+  opacity: 0.7;
+  transform: rotate(0deg);
 }
 
 .emoji-capsule {
@@ -275,24 +286,24 @@ main > *:not(.paper-grain) {
 
 .emoji-body {
   position: absolute;
-  left: 28px;
+  left: 20px;
   bottom: 0;
-  width: 214px;
-  height: 158px;
+  width: 246px;
+  height: 210px;
   border: 8px solid #1c1917;
-  border-radius: 18px 18px 24px 24px;
+  border-radius: 6px 6px 22px 22px;
   background:
-    linear-gradient(180deg, #fffdf8, #e7e1d3),
-    repeating-linear-gradient(90deg, rgba(28, 25, 23, 0.04) 0 1px, transparent 1px 16px);
+    linear-gradient(180deg, #fffdf8, #f4f1e8 66%, #e4dfd1),
+    repeating-linear-gradient(90deg, rgba(28, 25, 23, 0.035) 0 1px, transparent 1px 18px);
 }
 
 .emoji-body::before {
   content: "K-NOVEL";
   position: absolute;
   left: 15px;
-  top: 18px;
-  width: 78px;
-  height: 48px;
+  top: 20px;
+  width: 76px;
+  height: 44px;
   border: 4px solid #1c1917;
   border-radius: 7px;
   background: #d9ae56;
@@ -305,37 +316,38 @@ main > *:not(.paper-grain) {
 
 .emoji-coin {
   position: absolute;
-  right: 16px;
-  top: 19px;
+  left: 20px;
+  top: 76px;
   border-radius: 5px;
-  background: #e64d42;
-  padding: 5px 7px;
-  font-size: 15px;
+  background: #f6eee2;
+  border: 4px solid #b84b3f;
+  padding: 7px 8px;
+  font-size: 14px;
   font-weight: 1000;
-  color: #fff;
+  color: #b84b3f;
 }
 
 .emoji-handle {
   position: absolute;
-  right: 13px;
-  top: 58px;
-  width: 78px;
-  height: 78px;
+  left: 76px;
+  top: 68px;
+  width: 102px;
+  height: 102px;
   border: 6px solid #1c1917;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 50%, #fffdf5 0 28%, transparent 30%),
+    radial-gradient(circle at 50% 50%, #fffdf5 0 34%, transparent 36%),
     conic-gradient(from -45deg, #244f9c 0 76%, #d6c448 76% 82%, #244f9c 82% 100%);
-  box-shadow: inset 0 0 0 5px #ece8df;
+  box-shadow: inset 0 0 0 8px #ece8df;
 }
 
 .emoji-handle::after {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 31px;
-  width: 38px;
-  height: 14px;
+  left: 12px;
+  top: 41px;
+  width: 48px;
+  height: 17px;
   border-radius: 999px;
   background: #fffdf5;
   border: 3px solid rgba(28, 25, 23, 0.72);
@@ -348,38 +360,40 @@ main > *:not(.paper-grain) {
 .emoji-tray {
   position: absolute;
   left: 20px;
-  bottom: 18px;
-  width: 84px;
-  height: 50px;
+  bottom: 32px;
+  width: 88px;
+  height: 72px;
   border: 6px solid #1c1917;
-  border-radius: 0 0 25px 25px;
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 0, #1c1917 0 34px, transparent 35px),
+    radial-gradient(circle at 50% 50%, #7c5538 0 37px, #1c1917 38px 41px, transparent 42px),
     linear-gradient(180deg, #f7f2e6, #d6d0c2);
 }
 
 .emoji-tray::after {
   content: "";
   position: absolute;
-  left: 16px;
-  bottom: 8px;
-  width: 42px;
-  height: 10px;
+  left: 55px;
+  bottom: -38px;
+  width: 132px;
+  height: 46px;
   border-radius: 999px;
-  background: rgba(28, 25, 23, 0.22);
+  background: linear-gradient(180deg, #fffdf8, #ded8c8);
+  border: 6px solid #1c1917;
+  transform: skewX(-12deg);
 }
 
 .capsule-drop {
   position: absolute;
-  left: 34px;
-  bottom: 38px;
+  left: 42px;
+  bottom: 44px;
   width: 46px;
   height: 46px;
   border: 3px solid #1c1917;
   border-radius: 50%;
   background: linear-gradient(90deg, #ef6f6c 50%, #fffaf0 50%);
   opacity: 0;
-  transform: translate(64px, -38px) rotate(0deg) scale(0.68);
+  transform: translate(92px, -24px) rotate(0deg) scale(0.68);
 }
 
 .machine-active .capsule-drop {
@@ -1258,19 +1272,19 @@ main > *:not(.paper-grain) {
 @keyframes capsuleRoll {
   0% {
     opacity: 0;
-    transform: translate(64px, -38px) rotate(0deg) scale(0.68);
+    transform: translate(92px, -24px) rotate(0deg) scale(0.68);
   }
   24% {
     opacity: 1;
-    transform: translate(26px, -18px) rotate(120deg) scale(0.9);
+    transform: translate(42px, -8px) rotate(120deg) scale(0.9);
   }
   66% {
     opacity: 1;
-    transform: translate(-3px, 8px) rotate(300deg) scale(1);
+    transform: translate(2px, 22px) rotate(300deg) scale(1);
   }
   100% {
     opacity: 1;
-    transform: translate(-18px, 12px) rotate(380deg) scale(1);
+    transform: translate(-10px, 28px) rotate(380deg) scale(1);
   }
 }
 
