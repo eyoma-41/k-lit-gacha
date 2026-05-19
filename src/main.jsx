@@ -348,6 +348,13 @@ function localDateKey() {
   return `${now.getFullYear()}-${month}-${day}`;
 }
 
+function backRarityLines(label) {
+  if (label?.endsWith('레어') && label.length > 3) {
+    return [label.slice(0, -2), '레어'];
+  }
+  return [label];
+}
+
 function BookCard({ card, tagColors, compact = false }) {
   const [flipped, setFlipped] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
@@ -402,7 +409,11 @@ function BookCard({ card, tagColors, compact = false }) {
               <p className="text-sm font-black text-stone-900">{book.제목}</p>
               <p className="mt-0.5 text-xs font-bold text-stone-600">{book.작가}</p>
             </div>
-            <span className="rounded-full border border-stone-400 px-2 py-1 text-[10px] font-black text-stone-700">{card.rarityLabel}</span>
+            <span className="back-rarity-badge">
+              {backRarityLines(card.rarityLabel).map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </span>
           </div>
           <div className="back-tag-row">
             {tags.map((tag) => {
@@ -431,9 +442,9 @@ function BookCard({ card, tagColors, compact = false }) {
   );
 }
 
-function CapsuleMachine({ active }) {
+function CapsuleMachine({ active, onDraw }) {
   return (
-    <div className={`machine ${active ? 'machine-active' : ''}`} aria-hidden="true">
+    <div className={`machine ${active ? 'machine-active' : ''}`}>
       <div className="machine-emoji">
         <div className="emoji-top">K-NOVEL CAPSULE</div>
         <div className="emoji-window">
@@ -446,7 +457,7 @@ function CapsuleMachine({ active }) {
         <div className="emoji-body">
           <span className="emoji-coin">1COIN</span>
           <span className="emoji-handle" />
-          <span className="emoji-tray" />
+          <button type="button" className="emoji-tray" onClick={onDraw}>캡슐 뽑기</button>
           <span className="capsule-drop" />
         </div>
       </div>
@@ -796,9 +807,8 @@ function App() {
         </div>
 
         <div className="gacha-stage">
-          <CapsuleMachine active={machineActive} />
+          <CapsuleMachine active={machineActive} onDraw={drawGacha} />
           <div className="machine-actions">
-            <button type="button" className="primary-button" onClick={drawGacha}>캡슐 뽑기</button>
             <p>{gachaMessage || '뽑기에는 토큰 1개가 필요합니다.'}</p>
           </div>
           <div className="result-slot">

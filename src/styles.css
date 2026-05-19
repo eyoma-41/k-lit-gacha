@@ -172,11 +172,11 @@ main > *:not(.paper-grain) {
 
 .machine-actions {
   position: absolute;
-  left: clamp(26px, 5vw, 58px);
-  top: 26px;
+  left: clamp(310px, 26vw, 330px);
+  top: 40px;
   z-index: 3;
   display: flex;
-  width: min(520px, calc(100% - 52px));
+  width: min(320px, calc(100% - 52px));
   align-items: center;
   gap: 14px;
 }
@@ -363,11 +363,30 @@ main > *:not(.paper-grain) {
   bottom: 58px;
   width: 74px;
   height: 74px;
-  border: 6px solid #1c1917;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, #7c5538 0 37px, #1c1917 38px 41px, transparent 42px),
-    linear-gradient(180deg, #f7f2e6, #d6d0c2);
+  display: grid;
+  place-items: center;
+  border: 5px solid #1c1917;
+  border-radius: 18px;
+  background: #1c1917;
+  color: #fffaf0;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 1000;
+  line-height: 1.15;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(28, 25, 23, 0.22);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.emoji-tray:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 rgba(28, 25, 23, 0.2);
+}
+
+.emoji-tray:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(28, 25, 23, 0.22);
 }
 
 .emoji-tray::after {
@@ -530,6 +549,43 @@ main > *:not(.paper-grain) {
   background:
     repeating-linear-gradient(0deg, transparent 0 29px, rgba(120, 93, 56, 0.2) 30px),
     linear-gradient(180deg, #fbf2dc, #ead9b8);
+}
+
+.back-rarity-badge {
+  display: inline-flex;
+  min-width: 34px;
+  max-width: 50px;
+  min-height: 30px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #a8a29e;
+  border-radius: 999px;
+  padding: 4px 7px;
+  color: #44403c;
+  font-size: 9px;
+  font-weight: 1000;
+  line-height: 1.08;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.back-rarity-badge span {
+  display: block;
+}
+
+.back-rarity-badge span + span {
+  margin-left: 2px;
+}
+
+.back-rarity-badge span:nth-child(2) {
+  margin-left: 0;
+}
+
+.back-rarity-badge:has(span:nth-child(2)) {
+  flex-direction: column;
+  white-space: normal;
+  padding-inline: 6px;
 }
 
 .rarity-badge {
