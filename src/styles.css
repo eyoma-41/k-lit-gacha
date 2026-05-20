@@ -1575,17 +1575,21 @@ main > *:not(.paper-grain) {
   header > div {
     align-items: flex-start;
     flex-direction: column;
+    gap: 14px;
   }
 
   header > div > div:last-child {
     width: 100%;
-    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    gap: 8px;
     text-align: left;
   }
 
   header h1,
   .site-title {
+    width: 100%;
     justify-content: flex-start;
     text-align: left;
   }
@@ -1596,8 +1600,10 @@ main > *:not(.paper-grain) {
 
   header .status-pill {
     min-height: 36px;
-    padding: 8px 13px;
-    font-size: 13px;
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1;
   }
 
   header nav {
@@ -1922,9 +1928,9 @@ main > *:not(.paper-grain) {
 
 @media (max-width: 380px) {
   header .status-pill {
-    min-height: 34px;
-    padding: 7px 11px;
-    font-size: 12px;
+    min-height: 32px;
+    padding: 7px 10px;
+    font-size: 11px;
   }
 
   .site-title {
