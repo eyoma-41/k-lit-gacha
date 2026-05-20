@@ -2037,3 +2037,41 @@ main > *:not(.paper-grain) {
     font-size: 13px;
   }
 }
+
+@media (max-width: 860px) {
+  header > div {
+    align-items: stretch !important;
+  }
+
+  header > div > div:first-child {
+    width: 100%;
+    text-align: left;
+  }
+
+  header .eyebrow,
+  header h1,
+  header .site-title {
+    text-align: left !important;
+  }
+
+  header .site-title {
+    justify-content: flex-start !important;
+  }
+
+  header > div > div:last-child {
+    display: flex !important;
+    width: 100%;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  header > div > div:last-child .status-pill {
+    min-height: 34px;
+    padding: 7px 11px;
+    font-size: 12px;
+    line-height: 1;
+  }
+}
