@@ -830,7 +830,8 @@ function App() {
         <div className="flex flex-col justify-center">
           <p className="eyebrow">{loading ? 'Loading' : loadMessage}</p>
           <h2 className="mt-3 font-black leading-tight">
-            한국 소설 카드를 모아보세요.
+            <span>한국 소설 카드를</span>
+            <span>모아보세요.</span>
           </h2>
           {dailyRewardMessage && (
             <p className="daily-reward-message">{dailyRewardMessage}</p>
@@ -893,11 +894,29 @@ function App() {
 
         <div className="rarity-ladder" aria-label="카드 등급">
           {RARITY_RANK.map((rarity) => (
-            <span key={rarity} className={`rarity-tier rarity-${rarity}`}>
+            <button
+              type="button"
+              key={rarity}
+              className={`rarity-tier rarity-${rarity} ${filterType === '등급별' && filterValue === rarity ? 'rarity-tier-active' : ''}`}
+              onClick={() => {
+                setFilterType('등급별');
+                setFilterValue(rarity);
+              }}
+            >
               <span className="rarity-tier-mark" />
               {rarity}
-            </span>
+            </button>
           ))}
+          <button
+            type="button"
+            className={`rarity-tier rarity-tier-all ${filterType === '전체' ? 'rarity-tier-active' : ''}`}
+            onClick={() => {
+              setFilterType('전체');
+              setFilterValue('전체');
+            }}
+          >
+            전체보기
+          </button>
         </div>
 
         <div className="filter-bar">
