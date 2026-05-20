@@ -114,6 +114,20 @@ header h1 {
   line-height: 1.1;
 }
 
+.site-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.site-title span {
+  color: #8a7555;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
 header nav {
   display: flex;
   gap: 8px;
@@ -812,6 +826,12 @@ main > *:not(.paper-grain) {
 
 .card-visual img.cover-narrow {
   transform: scale(1.2);
+  transform-origin: center;
+}
+
+.card-visual img.cover-wide {
+  object-fit: contain;
+  transform: scale(1.08);
   transform-origin: center;
 }
 
@@ -1844,7 +1864,7 @@ main > *:not(.paper-grain) {
   .collection-grid .card-visual img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     border-radius: 10px;
   }

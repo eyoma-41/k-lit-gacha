@@ -400,8 +400,14 @@ function BookCard({ card, tagColors, compact = false }) {
                 loading="lazy"
                 onLoad={(event) => {
                   const image = event.currentTarget;
-                  const isNarrowCover = image.naturalWidth / image.naturalHeight < 0.62;
-                  setImageFitClass(isNarrowCover ? 'cover-narrow' : '');
+                  const imageRatio = image.naturalWidth / image.naturalHeight;
+                  if (imageRatio < 0.62) {
+                    setImageFitClass('cover-narrow');
+                  } else if (imageRatio > 0.86) {
+                    setImageFitClass('cover-wide');
+                  } else {
+                    setImageFitClass('');
+                  }
                 }}
                 onError={() => setImageFailed(true)}
               />
@@ -516,7 +522,7 @@ function ReadingRecordSection({ setCoins }) {
       <div className="section-head">
         <div>
           <p className="eyebrow">Reader Notes</p>
-          <h2 className="section-title">나만의 한국소설 독서기록장</h2>
+          <h2 className="section-title">나만의 한국 소설 독서기록장</h2>
         </div>
         <div className="reward-note">독서 기록을 남기면 토큰 3개를 드립니다.</div>
       </div>
@@ -734,7 +740,7 @@ function App() {
       setCollection((current) => [nextCard, ...current]);
       setRecent((current) => [nextCard, ...current].slice(0, 3));
       setMachineActive(false);
-      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급} ${pickedBook.제목} 획득`);
+      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급}《${pickedBook.제목}》획득`);
     }, 760);
   }
 
@@ -787,7 +793,10 @@ function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>
             <p className="eyebrow">Capsule Literature Archive</p>
-            <h1 className="text-2xl font-black sm:text-3xl">한국소설 뽑기</h1>
+            <h1 className="site-title">
+              한국 소설 뽑기
+              <span>in 남산도서관</span>
+            </h1>
           </div>
           <div className="flex items-center gap-2 text-right">
             <div className="status-pill">토큰 {coins}</div>
