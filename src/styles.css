@@ -634,8 +634,8 @@ main > *:not(.paper-grain) {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .front-book-meta {
@@ -1362,10 +1362,10 @@ main > *:not(.paper-grain) {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: minmax(126px, 0.9fr) minmax(156px, 1fr);
+    grid-template-columns: minmax(118px, 0.84fr) minmax(138px, 0.96fr);
     align-items: center;
     justify-items: center;
-    column-gap: 12px;
+    column-gap: 16px;
     row-gap: 14px;
     overflow: hidden;
     padding: 18px 12px 22px;
@@ -1383,15 +1383,15 @@ main > *:not(.paper-grain) {
     top: auto;
     order: 2;
     justify-self: end;
-    width: 145px;
-    height: 205px;
+    width: 128px;
+    height: 183px;
     transform: none;
     transform-origin: top left;
     margin: 0;
   }
 
   .machine-emoji {
-    transform: scale(0.58);
+    transform: scale(0.51);
     transform-origin: top left;
   }
 
@@ -1403,18 +1403,23 @@ main > *:not(.paper-grain) {
     grid-column: 1 / -1;
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 10px;
   }
 
   .machine-actions .primary-button {
-    min-height: 38px;
-    padding: 8px 14px;
-    font-size: 13px;
+    min-height: 46px;
+    border-width: 3px;
+    padding: 10px 20px;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 9px 0 rgba(28, 25, 23, 0.2);
   }
 
   .machine-actions p {
+    max-width: 150px;
     font-size: 12px;
+    line-height: 1.35;
   }
 
   .machine-active {
@@ -1434,8 +1439,8 @@ main > *:not(.paper-grain) {
 
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 170px;
-    height: 248px;
+    width: 152px;
+    height: 222px;
   }
 
   .result-slot .empty-card {
@@ -1507,9 +1512,9 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    width: 102px;
-    height: 116px;
-    margin: 8px auto 7px;
+    width: 88px;
+    height: 102px;
+    margin: 7px auto 6px;
     border-radius: 10px;
   }
 
