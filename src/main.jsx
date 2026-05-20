@@ -562,7 +562,7 @@ function App() {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadMessage, setLoadMessage] = useState('Google Sheets에서 목록을 불러오는 중입니다.');
-  const [coins, setCoins] = useLocalStorage('knovel-coins-test-20', STARTING_COINS);
+  const [coins, setCoins] = useLocalStorage('knovel-coins-test-200', STARTING_COINS);
   const [collection, setCollection] = useLocalStorage('knovel-collection', []);
   const [recent, setRecent] = useLocalStorage('knovel-recent', []);
   const [result, setResult] = useState(null);
