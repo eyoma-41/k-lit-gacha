@@ -172,23 +172,30 @@ main > *:not(.paper-grain) {
 
 .machine-actions {
   position: absolute;
-  left: clamp(310px, 26vw, 330px);
-  top: 40px;
+  left: 50%;
+  top: 44px;
   z-index: 3;
   display: flex;
-  width: min(320px, calc(100% - 52px));
+  width: min(520px, calc(100% - 64px));
   align-items: center;
+  justify-content: center;
   gap: 14px;
+  transform: translateX(-50%);
 }
 
 .machine-actions p {
-  min-height: 22px;
-  text-align: left;
+  min-height: 28px;
+  border: 1px solid rgba(28, 25, 23, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.82);
+  padding: 7px 18px;
+  text-align: center;
   color: #57534e;
   font-size: 13px;
   font-weight: 900;
   line-height: 1.45;
   margin: 0;
+  box-shadow: 0 8px 18px rgba(28, 25, 23, 0.08);
 }
 
 .machine-emoji {
@@ -1370,14 +1377,14 @@ main > *:not(.paper-grain) {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: 146px 136px;
+    grid-template-columns: minmax(124px, 142px) minmax(158px, 170px);
     justify-content: center;
     align-items: center;
     justify-items: center;
-    column-gap: 36px;
+    column-gap: clamp(26px, 7vw, 34px);
     row-gap: 16px;
     overflow: hidden;
-    padding: 20px 12px 24px;
+    padding: 22px 8px 26px;
   }
 
   .gacha-stage::before {
@@ -1393,16 +1400,21 @@ main > *:not(.paper-grain) {
     order: 2;
     justify-self: end;
     align-self: center;
-    width: 146px;
-    height: 212px;
+    width: 142px;
+    height: 248px;
+    display: grid;
+    place-items: center;
     transform: none;
-    transform-origin: top left;
+    transform-origin: center;
     margin: 0;
   }
 
   .machine-emoji {
-    transform: scale(0.51);
-    transform-origin: top left;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.49);
+    transform-origin: center;
   }
 
   .machine-actions {
@@ -1416,6 +1428,7 @@ main > *:not(.paper-grain) {
     flex-wrap: nowrap;
     gap: 10px;
     margin-bottom: 2px;
+    transform: none;
   }
 
   .machine-actions .primary-button {
@@ -1465,16 +1478,16 @@ main > *:not(.paper-grain) {
     align-self: center;
     display: grid;
     place-items: center;
-    width: 136px;
-    height: 199px;
+    width: 170px;
+    height: 248px;
     transform: none;
     transform-origin: center;
   }
 
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 136px;
-    height: 199px;
+    width: 170px;
+    height: 248px;
   }
 
   .result-slot .empty-card {
@@ -1489,7 +1502,7 @@ main > *:not(.paper-grain) {
 
   .result-slot .card-front,
   .result-slot .card-back {
-    padding: 8px;
+    padding: 9px;
   }
 
   .result-slot .card-back .text-sm {
@@ -1546,9 +1559,9 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    width: 82px;
-    height: 94px;
-    margin: 7px auto 6px;
+    width: 98px;
+    height: 134px;
+    margin: 7px auto 7px;
     border-radius: 10px;
   }
 
@@ -1563,11 +1576,11 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .front-title {
-    font-size: 15px;
+    font-size: 17px;
   }
 
   .result-slot .front-meta-line {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .section-head {
@@ -1606,6 +1619,8 @@ main > *:not(.paper-grain) {
   .collection-grid .card-visual img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
+    object-position: center;
     border-radius: 10px;
   }
 
@@ -1630,6 +1645,39 @@ main > *:not(.paper-grain) {
     justify-content: start;
     overflow-x: auto;
     padding: 0 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .gacha-stage {
+    grid-template-columns: 124px 158px;
+    column-gap: 22px;
+    padding-inline: 6px;
+  }
+
+  .machine {
+    width: 124px;
+    height: 232px;
+  }
+
+  .machine-emoji {
+    transform: translate(-50%, -50%) scale(0.44);
+  }
+
+  .result-slot,
+  .result-slot .card-shell,
+  .result-slot .empty-card {
+    width: 158px;
+    height: 232px;
+  }
+
+  .result-slot .card-visual {
+    width: 90px;
+    height: 124px;
+  }
+
+  .result-slot .front-title {
+    font-size: 15px;
   }
 }
 
