@@ -142,7 +142,7 @@ main > *:not(.paper-grain) {
 
 .gacha-stage {
   position: relative;
-  min-height: 530px;
+  min-height: 560px;
   overflow-x: auto;
   overflow-y: hidden;
   border: 1px solid rgba(28, 25, 23, 0.12);
@@ -180,7 +180,7 @@ main > *:not(.paper-grain) {
 .machine-actions {
   position: absolute;
   left: 50%;
-  top: 44px;
+  top: 26px;
   z-index: 3;
   display: flex;
   width: min(620px, calc(100% - 64px));
@@ -623,6 +623,8 @@ main > *:not(.paper-grain) {
   padding: 6px 9px;
   font-size: 11px;
   font-weight: 1000;
+  line-height: 1;
+  white-space: nowrap;
   color: var(--rarity-text, #1c1917);
   box-shadow: 0 3px 0 rgba(28, 25, 23, 0.22);
 }
@@ -662,7 +664,7 @@ main > *:not(.paper-grain) {
 }
 
 .card-visual img.cover-narrow {
-  transform: scale(1.5);
+  transform: scale(1.2);
   transform-origin: center;
 }
 
@@ -1529,6 +1531,24 @@ main > *:not(.paper-grain) {
     padding: 9px;
   }
 
+  .result-slot .card-front > .flex:first-of-type {
+    gap: 6px;
+  }
+
+  .result-slot .rarity-badge {
+    max-width: 84px;
+    padding: 5px 6px;
+    font-size: 9px;
+    letter-spacing: -0.01em;
+  }
+
+  .result-slot .rarity-badge + span {
+    flex: 0 0 auto;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
   .result-slot .card-back .text-sm {
     font-size: 11px;
     line-height: 1.25;
@@ -1713,6 +1733,17 @@ main > *:not(.paper-grain) {
   .result-slot .card-visual {
     width: 90px;
     height: 124px;
+  }
+
+  .result-slot .rarity-badge {
+    max-width: 76px;
+    padding-inline: 5px;
+    font-size: 8px;
+  }
+
+  .result-slot .rarity-badge + span {
+    font-size: 8px;
+    letter-spacing: 0.1em;
   }
 
   .result-slot .front-title {
