@@ -638,6 +638,12 @@ main > *:not(.paper-grain) {
   object-position: top center;
 }
 
+.collection-grid .card-visual img {
+  object-fit: contain;
+  object-position: center;
+  background: rgba(255, 250, 240, 0.72);
+}
+
 .front-book-meta {
   position: relative;
   z-index: 10;
@@ -1362,10 +1368,11 @@ main > *:not(.paper-grain) {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: minmax(118px, 0.84fr) minmax(138px, 0.96fr);
+    grid-template-columns: 138px 140px;
+    justify-content: center;
     align-items: center;
     justify-items: center;
-    column-gap: 16px;
+    column-gap: 28px;
     row-gap: 14px;
     overflow: hidden;
     padding: 18px 12px 22px;
@@ -1383,15 +1390,16 @@ main > *:not(.paper-grain) {
     top: auto;
     order: 2;
     justify-self: end;
-    width: 128px;
-    height: 183px;
+    align-self: center;
+    width: 138px;
+    height: 205px;
     transform: none;
     transform-origin: top left;
     margin: 0;
   }
 
   .machine-emoji {
-    transform: scale(0.51);
+    transform: scale(0.55);
     transform-origin: top left;
   }
 
@@ -1433,14 +1441,19 @@ main > *:not(.paper-grain) {
     top: auto;
     order: 3;
     justify-self: start;
+    align-self: center;
+    display: grid;
+    place-items: center;
+    width: 140px;
+    height: 205px;
     transform: none;
     transform-origin: center;
   }
 
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 152px;
-    height: 222px;
+    width: 140px;
+    height: 205px;
   }
 
   .result-slot .empty-card {
@@ -1512,8 +1525,8 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    width: 88px;
-    height: 102px;
+    width: 82px;
+    height: 94px;
     margin: 7px auto 6px;
     border-radius: 10px;
   }
