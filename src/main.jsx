@@ -84,7 +84,7 @@ const EMOJI_RULES = [
 ];
 
 const RARITY_ORDER = ['마스터피스', '슈퍼레어', '울트라레어', '스페셜레어', '레어', '스페셜'];
-const STARTING_COINS = 200;
+const STARTING_COINS = 20;
 const STORAGE_VERSION = 'rarity-v2';
 const RARITY_RANK = ['노멀', '스페셜', '레어', '스페셜레어', '울트라레어', '슈퍼레어', '마스터피스'];
 
@@ -358,6 +358,7 @@ function backRarityLines(label) {
 function BookCard({ card, tagColors, compact = false }) {
   const [flipped, setFlipped] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const [imageFitClass, setImageFitClass] = useState('');
   const book = card.book;
   const tags = tagsOf(book);
   const mainColor = tagColors[tags[0]] || '#c7a76c';
@@ -392,7 +393,18 @@ function BookCard({ card, tagColors, compact = false }) {
           </div>
           <div className="card-visual">
             {book.이미지URL && !imageFailed ? (
-              <img src={book.이미지URL} alt={`${book.제목} 이미지`} loading="lazy" onError={() => setImageFailed(true)} />
+              <img
+                className={imageFitClass}
+                src={book.이미지URL}
+                alt={`${book.제목} 이미지`}
+                loading="lazy"
+                onLoad={(event) => {
+                  const image = event.currentTarget;
+                  const isNarrowCover = image.naturalWidth / image.naturalHeight < 0.62;
+                  setImageFitClass(isNarrowCover ? 'cover-narrow' : '');
+                }}
+                onError={() => setImageFailed(true)}
+              />
             ) : (
               <span>{getBookEmoji(book)}</span>
             )}
@@ -562,7 +574,7 @@ function App() {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadMessage, setLoadMessage] = useState('Google Sheets에서 목록을 불러오는 중입니다.');
-  const [coins, setCoins] = useLocalStorage('knovel-coins-test-200', STARTING_COINS);
+  const [coins, setCoins] = useLocalStorage('knovel-coins-test-20', STARTING_COINS);
   const [collection, setCollection] = useLocalStorage('knovel-collection', []);
   const [recent, setRecent] = useLocalStorage('knovel-recent', []);
   const [result, setResult] = useState(null);
@@ -803,28 +815,33 @@ function App() {
           <h2 className="mt-3 font-black leading-tight">
             한국 소설 카드를 모아보세요.
           </h2>
-          <p className="image-credit">이미지 출처: 알라딘</p>
           {dailyRewardMessage && (
             <p className="daily-reward-message">{dailyRewardMessage}</p>
           )}
         </div>
 
-        <div className="gacha-stage">
-          <CapsuleMachine active={machineActive} onDraw={drawGacha} />
-          <div className="machine-actions">
-            <p>{gachaMessage || '뽑기에는 토큰 1개가 필요합니다.'}</p>
-          </div>
-          <div className="result-slot">
-            {result ? (
-              <div key={result.instanceId} className="card-enter">
-                <BookCard card={result} tagColors={tagColors} />
-              </div>
-            ) : (
-              <div className="empty-card">
-                <span className="text-6xl">📚</span>
-                <p>캡슐 안의 소설을 기다리는 중</p>
-              </div>
-            )}
+        <div className="gacha-column">
+          <p className="image-credit">이미지 출처: 알라딘</p>
+          <div className="gacha-stage">
+            <CapsuleMachine active={machineActive} onDraw={drawGacha} />
+            <div className="machine-actions">
+              <p>{gachaMessage || '뽑기에는 토큰 1개가 필요합니다.'}</p>
+              <button type="button" className="primary-button action-draw-button" onClick={drawGacha}>
+                캡슐 뽑기
+              </button>
+            </div>
+            <div className="result-slot">
+              {result ? (
+                <div key={result.instanceId} className="card-enter">
+                  <BookCard card={result} tagColors={tagColors} />
+                </div>
+              ) : (
+                <div className="empty-card">
+                  <span className="text-6xl">📚</span>
+                  <p>캡슐 안의 소설을 기다리는 중</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
