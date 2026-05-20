@@ -389,7 +389,7 @@ function BookCard({ card, tagColors, compact = false }) {
           </div>
           <div className="flex items-center justify-between gap-3">
             <span className={`rarity-badge badge-${card.rarity}`}>{card.rarityLabel}</span>
-            <span className="text-[11px] font-black uppercase tracking-[0.18em] text-stone-600">K-Novel</span>
+            <span className="card-brand">K-Novel</span>
           </div>
           <div className="card-visual">
             {book.이미지URL && !imageFailed ? (

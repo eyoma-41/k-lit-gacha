@@ -236,16 +236,16 @@ main > *:not(.paper-grain) {
   width: min(100%, 1280px);
   margin-right: auto;
   margin-left: auto;
-  grid-template-columns: 0.82fr 1.18fr;
-  gap: 32px;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(660px, 1.28fr);
+  gap: 24px;
   align-items: center;
-  padding: 48px 16px;
+  padding: 34px 16px 28px;
 }
 
 .hero-section h2 {
   margin: 12px 0 0;
   max-width: min(100%, 42rem);
-  font-size: clamp(2.1rem, 4.4vw, 4.4rem);
+  font-size: clamp(2rem, 3.9vw, 3.8rem);
   font-weight: 1000;
   line-height: 1.08;
 }
@@ -258,7 +258,7 @@ main > *:not(.paper-grain) {
 
 .gacha-stage {
   position: relative;
-  min-height: 560px;
+  min-height: 520px;
   overflow-x: auto;
   overflow-y: hidden;
   border: 1px solid rgba(28, 25, 23, 0.12);
@@ -273,7 +273,7 @@ main > *:not(.paper-grain) {
   position: absolute;
   left: 280px;
   right: 300px;
-  bottom: 34px;
+  bottom: 28px;
   height: 8px;
   border-radius: 999px;
   background: rgba(28, 25, 23, 0.08);
@@ -281,10 +281,10 @@ main > *:not(.paper-grain) {
 
 .machine {
   position: absolute;
-  left: clamp(34px, calc(50% - 360px), 360px);
-  top: 50%;
-  width: 286px;
-  transform: translateY(-50%);
+  left: clamp(34px, calc(50% - 330px), 320px);
+  top: calc(50% + 20px);
+  width: 258px;
+  transform: translateY(-50%) scale(0.9);
   transform-origin: 50% 78%;
   filter: drop-shadow(0 20px 24px rgba(28, 25, 23, 0.18));
 }
@@ -296,10 +296,10 @@ main > *:not(.paper-grain) {
 .machine-actions {
   position: absolute;
   left: 50%;
-  top: 26px;
+  top: 34px;
   z-index: 3;
   display: flex;
-  width: min(620px, calc(100% - 64px));
+  width: min(610px, calc(100% - 76px));
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -320,6 +320,17 @@ main > *:not(.paper-grain) {
   line-height: 1.45;
   margin: 0;
   box-shadow: 0 8px 18px rgba(28, 25, 23, 0.08);
+}
+
+.card-brand {
+  flex: 0 0 auto;
+  color: #57534e;
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .action-draw-button {
@@ -562,7 +573,7 @@ main > *:not(.paper-grain) {
 
 .result-slot {
   position: absolute;
-  left: clamp(330px, calc(50% + 100px), 860px);
+  left: clamp(318px, calc(50% + 96px), 760px);
   right: auto;
   top: 50%;
   transform: translateY(-50%);
@@ -1532,16 +1543,20 @@ main > *:not(.paper-grain) {
     padding: 32px 16px;
   }
 
+  .hero-section h2 {
+    font-size: clamp(2.3rem, 11vw, 4rem);
+  }
+
   .gacha-stage {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: minmax(124px, 142px) minmax(158px, 170px);
+    grid-template-columns: minmax(124px, 142px) minmax(166px, 176px);
     justify-content: center;
     align-items: center;
     justify-items: center;
     column-gap: clamp(26px, 7vw, 34px);
-    row-gap: 16px;
+    row-gap: 20px;
     overflow: hidden;
     padding: 22px 8px 26px;
   }
@@ -1586,7 +1601,7 @@ main > *:not(.paper-grain) {
     justify-content: center;
     flex-wrap: nowrap;
     gap: 10px;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     transform: none;
   }
 
@@ -1608,6 +1623,8 @@ main > *:not(.paper-grain) {
     background: rgba(255, 250, 240, 0.82);
     padding: 7px 12px;
     text-align: center;
+    display: grid;
+    place-items: center;
     font-size: 12px;
     line-height: 1.35;
     box-shadow: 0 6px 16px rgba(28, 25, 23, 0.08);
@@ -1642,7 +1659,7 @@ main > *:not(.paper-grain) {
     align-self: center;
     display: grid;
     place-items: center;
-    width: 170px;
+    width: 176px;
     height: 248px;
     transform: none;
     transform-origin: center;
@@ -1650,7 +1667,7 @@ main > *:not(.paper-grain) {
 
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 170px;
+    width: 176px;
     height: 248px;
   }
 
@@ -1680,10 +1697,10 @@ main > *:not(.paper-grain) {
     letter-spacing: -0.01em;
   }
 
-  .result-slot .rarity-badge + span {
+  .result-slot .card-brand {
     flex: 0 0 auto;
-    font-size: 9px;
-    letter-spacing: 0.12em;
+    font-size: 8px;
+    letter-spacing: 0.08em;
     white-space: nowrap;
   }
 
@@ -1832,7 +1849,7 @@ main > *:not(.paper-grain) {
 
 @media (max-width: 380px) {
   .gacha-stage {
-    grid-template-columns: 124px 158px;
+    grid-template-columns: 122px 164px;
     column-gap: 22px;
     padding-inline: 6px;
   }
@@ -1853,7 +1870,7 @@ main > *:not(.paper-grain) {
   }
 
   .machine {
-    width: 124px;
+    width: 122px;
     height: 232px;
   }
 
@@ -1864,7 +1881,7 @@ main > *:not(.paper-grain) {
   .result-slot,
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 158px;
+    width: 164px;
     height: 232px;
   }
 
@@ -1879,9 +1896,9 @@ main > *:not(.paper-grain) {
     font-size: 8px;
   }
 
-  .result-slot .rarity-badge + span {
+  .result-slot .card-brand {
     font-size: 8px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
   }
 
   .result-slot .front-title {
