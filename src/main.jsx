@@ -213,13 +213,21 @@ function refreshCardBooks(cards, latestBooks) {
   const byId = new Map(latestBooks.map((book) => [String(book.id), book]));
   const byTitleAuthor = new Map(latestBooks.map((book) => [`${book.제목}::${book.작가}`, book]));
 
-  return cards.map((card) => {
+  return cards.filter((card) => !isSampleBook(card.book)).map((card) => {
     const latest =
       byId.get(String(card.book?.id)) ||
       byTitleAuthor.get(`${card.book?.제목}::${card.book?.작가}`);
 
     return latest ? { ...card, book: { ...card.book, ...latest } } : card;
   });
+}
+
+function isSampleBook(book) {
+  return (
+    String(book?.id || '').startsWith('sample-') ||
+    book?.작가 === '샘플 작가' ||
+    book?.작가 === '가상 소설가'
+  );
 }
 
 function tagsOf(book) {
@@ -574,7 +582,7 @@ function ReadingRecordSection({ setCoins }) {
 }
 
 function App() {
-  const [books, setBooks] = useState(SAMPLE_BOOKS);
+  const [books, setBooks] = useState([]);
   const [tagColors, setTagColors] = useState(SAMPLE_TAG_COLORS);
   const [rarities, setRarities] = useState(DEFAULT_RARITIES);
   const [rewards, setRewards] = useState([]);
@@ -627,7 +635,7 @@ function App() {
         ]);
 
         const nextBooks = cleanBooks(bookRows);
-        const usableBooks = nextBooks.length ? nextBooks : SAMPLE_BOOKS;
+        const usableBooks = nextBooks;
         setBooks(usableBooks);
         setCollection((current) => refreshCardBooks(current, usableBooks));
         setRecent((current) => refreshCardBooks(current, usableBooks));
@@ -638,16 +646,16 @@ function App() {
         });
         setRarities(DEFAULT_RARITIES);
         setRewards(rewardRows);
-        setLoadMessage(nextBooks.length ? 'Google Sheets 동기화 완료' : '시트가 비어 있어 샘플 데이터를 사용 중입니다.');
+        setLoadMessage(nextBooks.length ? 'Google Sheets 동기화 완료' : '시트가 비어 있습니다.');
       } catch {
-        setBooks(SAMPLE_BOOKS);
-        setCollection((current) => refreshCardBooks(current, SAMPLE_BOOKS));
-        setRecent((current) => refreshCardBooks(current, SAMPLE_BOOKS));
-        setResult((current) => (current ? refreshCardBooks([current], SAMPLE_BOOKS)[0] : current));
+        setBooks([]);
+        setCollection((current) => refreshCardBooks(current, []));
+        setRecent((current) => refreshCardBooks(current, []));
+        setResult((current) => (current && !isSampleBook(current.book) ? current : null));
         setTagColors(SAMPLE_TAG_COLORS);
         setRarities(DEFAULT_RARITIES);
         setRewards([]);
-        setLoadMessage('Google Sheets 로딩 실패로 샘플 데이터를 사용 중입니다.');
+        setLoadMessage('Google Sheets 로딩 실패');
       } finally {
         setLoading(false);
       }

@@ -835,6 +835,17 @@ main > *:not(.paper-grain) {
   transform-origin: center;
 }
 
+.result-slot .card-visual img {
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.result-slot .card-visual img.cover-wide {
+  object-fit: contain;
+  transform: scale(1.14);
+  transform-origin: center;
+}
+
 .collection-grid .card-visual img {
   object-fit: contain;
   object-position: center;
@@ -1573,6 +1584,22 @@ main > *:not(.paper-grain) {
     text-align: left;
   }
 
+  header h1,
+  .site-title {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .site-title span {
+    font-size: 11px;
+  }
+
+  header .status-pill {
+    min-height: 36px;
+    padding: 8px 13px;
+    font-size: 13px;
+  }
+
   header nav {
     overflow-x: auto;
   }
@@ -1894,6 +1921,20 @@ main > *:not(.paper-grain) {
 }
 
 @media (max-width: 380px) {
+  header .status-pill {
+    min-height: 34px;
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+
+  .site-title {
+    gap: 6px;
+  }
+
+  .site-title span {
+    font-size: 10px;
+  }
+
   .gacha-stage {
     grid-template-columns: 122px 164px;
     column-gap: 22px;
