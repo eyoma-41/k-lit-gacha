@@ -258,9 +258,18 @@ main > *:not(.paper-grain) {
 
 .gacha-stage {
   position: relative;
-  min-height: 520px;
-  overflow-x: auto;
+  display: grid;
+  min-height: 500px;
+  grid-template-columns: minmax(250px, 286px) minmax(260px, 286px);
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  column-gap: clamp(58px, 8vw, 96px);
+  row-gap: 26px;
+  overflow-x: hidden;
   overflow-y: hidden;
+  padding: 54px clamp(26px, 4vw, 56px) 34px;
   border: 1px solid rgba(28, 25, 23, 0.12);
   border-radius: 20px;
   background:
@@ -271,8 +280,8 @@ main > *:not(.paper-grain) {
 .gacha-stage::before {
   content: "";
   position: absolute;
-  left: 280px;
-  right: 300px;
+  left: 30%;
+  right: 30%;
   bottom: 28px;
   height: 8px;
   border-radius: 999px;
@@ -280,12 +289,15 @@ main > *:not(.paper-grain) {
 }
 
 .machine {
-  position: absolute;
-  left: clamp(34px, calc(50% - 330px), 320px);
-  top: calc(50% + 20px);
-  width: 258px;
-  transform: translateY(-50%) scale(0.9);
-  transform-origin: 50% 78%;
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  left: auto;
+  top: auto;
+  width: 286px;
+  height: 416px;
+  transform: none;
+  transform-origin: center;
   filter: drop-shadow(0 20px 24px rgba(28, 25, 23, 0.18));
 }
 
@@ -294,16 +306,18 @@ main > *:not(.paper-grain) {
 }
 
 .machine-actions {
-  position: absolute;
-  left: 50%;
-  top: 34px;
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  left: auto;
+  top: auto;
   z-index: 3;
   display: flex;
-  width: min(610px, calc(100% - 76px));
+  width: min(620px, 100%);
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transform: translateX(-50%);
+  transform: none;
 }
 
 .machine-actions p {
@@ -572,11 +586,17 @@ main > *:not(.paper-grain) {
 }
 
 .result-slot {
-  position: absolute;
-  left: clamp(318px, calc(50% + 96px), 760px);
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
   right: auto;
-  top: 50%;
-  transform: translateY(-50%);
+  left: auto;
+  top: auto;
+  display: grid;
+  width: 286px;
+  height: 416px;
+  place-items: center;
+  transform: none;
 }
 
 .empty-card {
@@ -785,7 +805,7 @@ main > *:not(.paper-grain) {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   background: rgba(255, 250, 240, 0.72);
 }
@@ -796,7 +816,7 @@ main > *:not(.paper-grain) {
 }
 
 .collection-grid .card-visual img {
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   background: rgba(255, 250, 240, 0.72);
 }
@@ -1552,6 +1572,7 @@ main > *:not(.paper-grain) {
     min-height: 0;
     width: 100%;
     grid-template-columns: minmax(124px, 142px) minmax(166px, 176px);
+    grid-template-rows: auto 248px;
     justify-content: center;
     align-items: center;
     justify-items: center;
@@ -1569,6 +1590,8 @@ main > *:not(.paper-grain) {
 
   .machine {
     position: relative;
+    grid-column: auto;
+    grid-row: auto;
     left: auto;
     top: auto;
     order: 2;
@@ -1593,6 +1616,7 @@ main > *:not(.paper-grain) {
 
   .machine-actions {
     position: relative;
+    grid-row: auto;
     left: auto;
     top: auto;
     order: 1;
@@ -1651,6 +1675,8 @@ main > *:not(.paper-grain) {
 
   .result-slot {
     position: relative;
+    grid-column: auto;
+    grid-row: auto;
     left: auto;
     right: auto;
     top: auto;
