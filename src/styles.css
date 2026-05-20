@@ -13,11 +13,111 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+main {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f4eddc;
+  color: #1c1917;
+}
+
 button,
 select,
 textarea,
 input {
   font: inherit;
+}
+
+.flex { display: flex; }
+.grid { display: grid; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-col { flex-direction: column; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.font-bold { font-weight: 700; }
+.font-black { font-weight: 1000; }
+.uppercase { text-transform: uppercase; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+.mt-0\.5 { margin-top: 2px; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.pb-3 { padding-bottom: 12px; }
+.text-xs { font-size: 12px; }
+.text-sm { font-size: 14px; }
+.text-lg { font-size: 18px; }
+.text-2xl { font-size: 24px; }
+.text-5xl { font-size: 48px; }
+.text-6xl { font-size: 60px; }
+.leading-6 { line-height: 1.5rem; }
+.leading-tight { line-height: 1.08; }
+.text-stone-500 { color: #78716c; }
+.text-stone-600 { color: #57534e; }
+.text-stone-700 { color: #44403c; }
+.text-stone-900,
+.text-stone-950 { color: #1c1917; }
+.text-emerald-800 { color: #065f46; }
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+.border-dashed { border-style: dashed; }
+.border-stone-400 { border-color: #a8a29e; }
+.tracking-\[0\.18em\] { letter-spacing: 0.18em; }
+.line-clamp-3 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid rgba(28, 25, 23, 0.1);
+  background: rgba(244, 237, 220, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+header > div,
+header > nav {
+  width: min(100%, 1280px);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+header > div > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: right;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+header nav {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 16px;
 }
 
 .paper-grain {
@@ -132,12 +232,28 @@ main > *:not(.paper-grain) {
 }
 
 .hero-section {
+  display: grid;
+  width: min(100%, 1280px);
+  margin-right: auto;
+  margin-left: auto;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 32px;
   align-items: center;
+  padding: 48px 16px;
 }
 
 .hero-section h2 {
+  margin: 12px 0 0;
   max-width: min(100%, 42rem);
   font-size: clamp(2.1rem, 4.4vw, 4.4rem);
+  font-weight: 1000;
+  line-height: 1.08;
+}
+
+.hero-section > div:first-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .gacha-stage {
@@ -1394,6 +1510,28 @@ main > *:not(.paper-grain) {
 }
 
 @media (max-width: 860px) {
+  header > div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  header > div > div:last-child {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  header nav {
+    overflow-x: auto;
+  }
+
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 16px;
+  }
+
   .gacha-stage {
     display: grid;
     min-height: 0;
