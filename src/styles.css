@@ -1370,14 +1370,14 @@ main > *:not(.paper-grain) {
     display: grid;
     min-height: 0;
     width: 100%;
-    grid-template-columns: 138px 140px;
+    grid-template-columns: 146px 136px;
     justify-content: center;
     align-items: center;
     justify-items: center;
-    column-gap: 28px;
-    row-gap: 14px;
+    column-gap: 36px;
+    row-gap: 16px;
     overflow: hidden;
-    padding: 18px 12px 22px;
+    padding: 20px 12px 24px;
   }
 
   .gacha-stage::before {
@@ -1393,15 +1393,15 @@ main > *:not(.paper-grain) {
     order: 2;
     justify-self: end;
     align-self: center;
-    width: 138px;
-    height: 205px;
+    width: 146px;
+    height: 212px;
     transform: none;
     transform-origin: top left;
     margin: 0;
   }
 
   .machine-emoji {
-    transform: scale(0.55);
+    transform: scale(0.51);
     transform-origin: top left;
   }
 
@@ -1411,10 +1411,11 @@ main > *:not(.paper-grain) {
     top: auto;
     order: 1;
     grid-column: 1 / -1;
-    width: 100%;
+    width: min(100%, 320px);
     justify-content: center;
     flex-wrap: nowrap;
     gap: 10px;
+    margin-bottom: 2px;
   }
 
   .machine-actions .primary-button {
@@ -1427,9 +1428,27 @@ main > *:not(.paper-grain) {
   }
 
   .machine-actions p {
-    max-width: 150px;
+    width: 100%;
+    max-width: none;
+    border: 1px solid rgba(28, 25, 23, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 250, 240, 0.82);
+    padding: 7px 12px;
+    text-align: center;
     font-size: 12px;
     line-height: 1.35;
+    box-shadow: 0 6px 16px rgba(28, 25, 23, 0.08);
+  }
+
+  .emoji-tray {
+    border-width: 4px;
+    background: linear-gradient(180deg, #ffef6d, #efb83f);
+    color: #1c1917;
+    box-shadow: 0 7px 0 rgba(28, 25, 23, 0.28), 0 0 0 5px rgba(255, 239, 109, 0.34);
+  }
+
+  .emoji-tray:hover {
+    box-shadow: 0 9px 0 rgba(28, 25, 23, 0.24), 0 0 0 5px rgba(255, 239, 109, 0.34);
   }
 
   .machine-active {
@@ -1446,16 +1465,16 @@ main > *:not(.paper-grain) {
     align-self: center;
     display: grid;
     place-items: center;
-    width: 140px;
-    height: 205px;
+    width: 136px;
+    height: 199px;
     transform: none;
     transform-origin: center;
   }
 
   .result-slot .card-shell,
   .result-slot .empty-card {
-    width: 140px;
-    height: 205px;
+    width: 136px;
+    height: 199px;
   }
 
   .result-slot .empty-card {
