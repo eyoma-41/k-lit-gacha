@@ -84,7 +84,7 @@ const EMOJI_RULES = [
 ];
 
 const RARITY_ORDER = ['마스터피스', '슈퍼레어', '울트라레어', '스페셜레어', '레어', '스페셜'];
-const STARTING_COINS = 20;
+const STARTING_COINS = 200;
 const STORAGE_VERSION = 'rarity-v2';
 const RARITY_RANK = ['노멀', '스페셜', '레어', '스페셜레어', '울트라레어', '슈퍼레어', '마스터피스'];
 
