@@ -496,11 +496,12 @@ function CapsuleMachine({ active, onDraw }) {
       <div className="machine-emoji">
         <div className="emoji-top">K-NOVEL CAPSULE</div>
         <div className="emoji-window">
-          <span className="machine-poster poster-a" />
-          <span className="machine-poster poster-b" />
-          <span className="emoji-capsule cap-a" />
-          <span className="emoji-capsule cap-b" />
-          <span className="emoji-capsule cap-c" />
+          <img
+            className="capsule-window-art"
+            src="/assets/capsule-window-clean.svg"
+            alt="캡슐이 들어 있는 가챠 머신 내부"
+            draggable="false"
+          />
         </div>
         <div className="emoji-body">
           <span className="emoji-coin">1COIN</span>
@@ -833,7 +834,7 @@ function App() {
       setCollection((current) => [nextCard, ...current]);
       setRecent((current) => [nextCard, ...current].slice(0, 3));
       setMachineActive(false);
-      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급} 《${pickedBook.제목}》 획득`);
+      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급} 《${pickedBook.제목}》획득`);
     }, 760);
   }
 
@@ -915,7 +916,7 @@ function App() {
         <div className="flex flex-col justify-center">
           <p className="eyebrow">{loading ? 'Loading' : loadMessage}</p>
           <h2 className="mt-3 font-black leading-tight">
-            <span>작품을</span>
+            <span>한국 소설 카드를</span>
             <span>모아보세요.</span>
           </h2>
           {dailyRewardMessage && (
