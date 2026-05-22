@@ -498,6 +498,7 @@ function ReadingRecordSection({ setCoins }) {
   const [readingRecords, setReadingRecords] = useLocalStorage('knovel-reading-records', []);
   const [form, setForm] = useState({ title: '', author: '', reason: '' });
   const [message, setMessage] = useState('');
+  const [editingRecordId, setEditingRecordId] = useState(null);
 
   function submitReadingRecord(event) {
     event.preventDefault();
@@ -505,6 +506,26 @@ function ReadingRecordSection({ setCoins }) {
 
     if (!form.title.trim() || !form.author.trim() || !form.reason.trim() || reasonLength < 20) {
       setMessage('독서 기록은 20자 이상 작성해 주세요.');
+      return;
+    }
+
+    if (editingRecordId) {
+      setReadingRecords((current) =>
+        current.map((record) =>
+          record.id === editingRecordId
+            ? {
+                ...record,
+                title: form.title.trim(),
+                author: form.author.trim(),
+                reason: form.reason.trim(),
+                updatedAt: new Date().toISOString(),
+              }
+            : record,
+        ),
+      );
+      setMessage('독서 기록이 수정되었습니다.');
+      setEditingRecordId(null);
+      setForm({ title: '', author: '', reason: '' });
       return;
     }
 
@@ -523,6 +544,31 @@ function ReadingRecordSection({ setCoins }) {
     setCoins((current) => current + reward);
     setMessage('독서 기록이 저장되었습니다. 토큰 3개를 받았습니다.');
     setForm({ title: '', author: '', reason: '' });
+  }
+
+  function startEditingRecord(record) {
+    setEditingRecordId(record.id);
+    setForm({
+      title: record.title || '',
+      author: record.author || '',
+      reason: record.reason || record.text || '',
+    });
+    setMessage('수정할 내용을 고친 뒤 저장해 주세요.');
+  }
+
+  function cancelEditingRecord() {
+    setEditingRecordId(null);
+    setForm({ title: '', author: '', reason: '' });
+    setMessage('');
+  }
+
+  function deleteReadingRecord(recordId) {
+    setReadingRecords((current) => current.filter((record) => record.id !== recordId));
+    if (editingRecordId === recordId) {
+      setEditingRecordId(null);
+      setForm({ title: '', author: '', reason: '' });
+    }
+    setMessage('독서 기록이 삭제되었습니다.');
   }
 
   return (
@@ -556,7 +602,16 @@ function ReadingRecordSection({ setCoins }) {
             value={form.reason}
             onChange={(event) => setForm((current) => ({ ...current, reason: event.target.value }))}
           />
-          <button type="submit" className="primary-button">독서 기록 저장하고 토큰 받기</button>
+          <div className="form-actions">
+            <button type="submit" className="primary-button">
+              {editingRecordId ? '독서 기록 수정하기' : '독서 기록 저장하고 토큰 받기'}
+            </button>
+            {editingRecordId && (
+              <button type="button" className="secondary-button" onClick={cancelEditingRecord}>
+                수정 취소
+              </button>
+            )}
+          </div>
           {message && <p className="text-sm font-bold text-emerald-800">{message}</p>}
         </form>
 
@@ -572,6 +627,14 @@ function ReadingRecordSection({ setCoins }) {
                   <span className="text-xs font-black text-stone-500">{record.author || '작가 미상'}</span>
                 </div>
                 <p className="mt-2 line-clamp-3 text-sm leading-6 text-stone-700">{record.reason || record.text}</p>
+                <div className="review-actions">
+                  <button type="button" className="small-action-button" onClick={() => startEditingRecord(record)}>
+                    수정
+                  </button>
+                  <button type="button" className="small-action-button danger-button" onClick={() => deleteReadingRecord(record.id)}>
+                    삭제
+                  </button>
+                </div>
               </article>
             ))
           )}

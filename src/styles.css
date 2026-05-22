@@ -2120,3 +2120,191 @@ main > *:not(.paper-grain) {
     line-height: 1;
   }
 }
+
+.form-actions,
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-actions .primary-button {
+  width: auto;
+}
+
+.secondary-button,
+.small-action-button {
+  border: 1px solid rgba(28, 25, 23, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.82);
+  color: #514733;
+  font-weight: 900;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.secondary-button {
+  min-height: 42px;
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+.small-action-button {
+  min-height: 30px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.secondary-button:hover,
+.small-action-button:hover {
+  border-color: rgba(28, 25, 23, 0.42);
+  background: rgba(255, 250, 240, 0.96);
+  transform: translateY(-1px);
+}
+
+.danger-button {
+  border-color: rgba(190, 18, 60, 0.22);
+  color: #9f1239;
+}
+
+.review-actions {
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+@media (max-width: 860px) {
+  .result-slot .card-visual {
+    width: min(112px, 62%);
+    aspect-ratio: 2 / 3;
+    height: auto;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: rgba(255, 250, 240, 0.72);
+  }
+
+  .result-slot .card-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .result-slot .card-visual img.cover-narrow {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .result-slot .card-visual img.cover-wide {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto 0;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .combine-layout {
+    gap: 14px;
+  }
+
+  .combine-panel {
+    padding: 12px;
+  }
+
+  .combine-picker {
+    max-height: 170px;
+  }
+
+  .combine-stage {
+    grid-template-columns: minmax(118px, 1fr) 22px minmax(118px, 1fr);
+    gap: 8px;
+    min-height: 292px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px 8px;
+  }
+
+  .combine-stack {
+    width: 142px;
+    height: 210px;
+    justify-self: center;
+  }
+
+  .combine-mini {
+    left: 8px;
+    top: 0;
+  }
+
+  .combine-mini .card-shell,
+  .combine-output .card-shell,
+  .combine-placeholder {
+    width: 126px;
+    height: 184px;
+  }
+
+  .combine-mini-0 {
+    transform: translateX(-14px) rotate(-7deg) scale(0.72);
+  }
+
+  .combine-mini-1 {
+    transform: translateX(0) rotate(0deg) scale(0.72);
+  }
+
+  .combine-mini-2 {
+    transform: translateX(14px) rotate(7deg) scale(0.72);
+  }
+
+  .combine-mini:only-child {
+    transform: translateX(0) rotate(0deg) scale(0.72);
+  }
+
+  .combine-output {
+    min-width: 0;
+  }
+
+  .combine-arrow {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  .combine-stage {
+    grid-template-columns: minmax(104px, 1fr) 18px minmax(104px, 1fr);
+    gap: 6px;
+    min-height: 264px;
+    padding: 8px 6px;
+  }
+
+  .combine-stack {
+    width: 122px;
+    height: 188px;
+  }
+
+  .combine-mini .card-shell,
+  .combine-output .card-shell,
+  .combine-placeholder {
+    width: 112px;
+    height: 164px;
+  }
+
+  .combine-mini {
+    left: 5px;
+  }
+}
