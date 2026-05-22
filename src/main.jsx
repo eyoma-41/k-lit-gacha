@@ -915,7 +915,7 @@ function App() {
         <div className="flex flex-col justify-center">
           <p className="eyebrow">{loading ? 'Loading' : loadMessage}</p>
           <h2 className="mt-3 font-black leading-tight">
-            <span>한국 소설 카드를</span>
+            <span>작품을</span>
             <span>모아보세요.</span>
           </h2>
           {dailyRewardMessage && (
