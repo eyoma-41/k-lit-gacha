@@ -405,7 +405,9 @@ main > *:not(.paper-grain) {
   overflow: hidden;
   border: 7px solid #1c1917;
   border-radius: 18px 18px 28px 28px;
-  background: linear-gradient(180deg, #dff1fb, #f8f5ec);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.62), transparent 18% 82%, rgba(117, 72, 45, 0.12)),
+    linear-gradient(180deg, #dff1fb, #f8f5ec);
 }
 
 .emoji-window::after {
@@ -417,17 +419,6 @@ main > *:not(.paper-grain) {
   background:
     linear-gradient(105deg, transparent 0 42%, rgba(255, 255, 255, 0.3) 43% 50%, transparent 51%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%);
-}
-
-.capsule-window-art {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  user-select: none;
-  pointer-events: none;
 }
 
 .machine-poster {
@@ -473,6 +464,53 @@ main > *:not(.paper-grain) {
 .cap-a { left: 34px; bottom: 26px; transform: rotate(-22deg); }
 .cap-b { right: 34px; bottom: 32px; transform: rotate(18deg); background: linear-gradient(90deg, #3aaed8 50%, #fffaf0 50%); }
 .cap-c { left: 92px; top: 42px; transform: rotate(8deg); background: linear-gradient(90deg, #9bdc58 50%, #fffaf0 50%); }
+
+.window-capsule {
+  position: absolute;
+  z-index: 1;
+  width: 62px;
+  height: 35px;
+  border: 4px solid #1c1917;
+  border-radius: 999px;
+  background:
+    linear-gradient(105deg, rgba(255, 255, 255, 0.58), transparent 32%),
+    linear-gradient(90deg, var(--cap-color, #ef6f6c) 0 50%, #fffaf0 50% 100%);
+  box-shadow:
+    inset 0 4px 8px rgba(255, 255, 255, 0.42),
+    inset 0 -5px 8px rgba(28, 25, 23, 0.1),
+    0 5px 8px rgba(28, 25, 23, 0.18);
+}
+
+.window-capsule::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  width: 18px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.56);
+  transform: rotate(-15deg);
+}
+
+.window-capsule-1 { left: -8px; top: 6px; --cap-color: #ef6f6c; transform: rotate(18deg) scale(0.9); }
+.window-capsule-2 { left: 42px; top: 2px; --cap-color: #3aaed8; transform: rotate(-16deg) scale(0.86); }
+.window-capsule-3 { left: 91px; top: 8px; --cap-color: #9bdc58; transform: rotate(10deg) scale(0.92); }
+.window-capsule-4 { left: 143px; top: 2px; --cap-color: #f4ca42; transform: rotate(-13deg) scale(0.88); }
+.window-capsule-5 { right: -8px; top: 12px; --cap-color: #b985d6; transform: rotate(22deg) scale(0.86); }
+.window-capsule-6 { left: 12px; top: 42px; --cap-color: #f47742; transform: rotate(-24deg) scale(0.98); }
+.window-capsule-7 { left: 62px; top: 38px; --cap-color: #77d88b; transform: rotate(20deg) scale(0.92); }
+.window-capsule-8 { left: 114px; top: 42px; --cap-color: #d75e9f; transform: rotate(-10deg) scale(0.96); }
+.window-capsule-9 { right: 26px; top: 42px; --cap-color: #56b9dd; transform: rotate(18deg) scale(0.92); }
+.window-capsule-10 { left: -6px; top: 78px; --cap-color: #9bdc58; transform: rotate(15deg) scale(0.96); }
+.window-capsule-11 { left: 46px; top: 74px; --cap-color: #f4ca42; transform: rotate(-17deg) scale(1.02); }
+.window-capsule-12 { left: 104px; top: 78px; --cap-color: #ef6f6c; transform: rotate(26deg) scale(0.95); }
+.window-capsule-13 { left: 160px; top: 74px; --cap-color: #3aaed8; transform: rotate(-21deg) scale(0.98); }
+.window-capsule-14 { right: -4px; top: 84px; --cap-color: #f47742; transform: rotate(10deg) scale(0.9); }
+.window-capsule-15 { left: 22px; bottom: 8px; --cap-color: #b985d6; transform: rotate(-8deg) scale(1); }
+.window-capsule-16 { left: 80px; bottom: 10px; --cap-color: #77d88b; transform: rotate(14deg) scale(0.98); }
+.window-capsule-17 { left: 138px; bottom: 8px; --cap-color: #f4ca42; transform: rotate(-12deg) scale(1.02); }
+.window-capsule-18 { right: 14px; bottom: 6px; --cap-color: #ef6f6c; transform: rotate(16deg) scale(0.96); }
 
 .emoji-body {
   position: absolute;

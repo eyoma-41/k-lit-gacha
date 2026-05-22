@@ -496,12 +496,9 @@ function CapsuleMachine({ active, onDraw }) {
       <div className="machine-emoji">
         <div className="emoji-top">K-NOVEL CAPSULE</div>
         <div className="emoji-window">
-          <img
-            className="capsule-window-art"
-            src="/assets/capsule-window-classic.svg"
-            alt="캡슐이 가득 들어 있는 가챠 머신 내부"
-            draggable="false"
-          />
+          {Array.from({ length: 18 }, (_, index) => (
+            <span key={index} className={`window-capsule window-capsule-${index + 1}`} />
+          ))}
         </div>
         <div className="emoji-body">
           <span className="emoji-coin">1COIN</span>
