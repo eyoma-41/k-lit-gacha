@@ -496,7 +496,7 @@ function CapsuleMachine({ active, onDraw }) {
       <div className="machine-emoji">
         <div className="emoji-top">K-NOVEL CAPSULE</div>
         <div className="emoji-window">
-          {Array.from({ length: 18 }, (_, index) => (
+          {Array.from({ length: 16 }, (_, index) => (
             <span key={index} className={`window-capsule window-capsule-${index + 1}`} />
           ))}
         </div>
