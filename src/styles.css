@@ -808,7 +808,7 @@ main > *:not(.paper-grain) {
   border: 3px solid rgba(28, 25, 23, 0.82);
   border-radius: 14px;
   background: rgba(255, 250, 240, 0.62);
-  box-shadow: inset 0 0 0 8px rgba(255, 250, 240, 0.32), 0 12px 22px rgba(28, 25, 23, 0.12);
+  box-shadow: 0 12px 22px rgba(28, 25, 23, 0.12);
   text-align: center;
 }
 
@@ -828,7 +828,7 @@ main > *:not(.paper-grain) {
   max-height: none;
   margin: 0;
   object-fit: cover;
-  object-position: center center;
+  object-position: center 62%;
   transform: none;
   border-radius: 10px;
   background: rgba(255, 250, 240, 0.72);
@@ -837,7 +837,7 @@ main > *:not(.paper-grain) {
 .card-visual img.cover-narrow,
 .card-visual img.cover-wide {
   object-fit: cover;
-  object-position: center center;
+  object-position: center 62%;
   transform: none;
 }
 
@@ -1845,6 +1845,7 @@ main > *:not(.paper-grain) {
     margin: 8px auto;
     padding: 0;
     border-radius: 12px;
+    box-shadow: 0 8px 14px rgba(28, 25, 23, 0.12);
   }
 
   .result-slot .card-visual span {
@@ -1859,7 +1860,7 @@ main > *:not(.paper-grain) {
     margin: 0;
     border-radius: 8px;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 62%;
     transform: none;
   }
 
@@ -1904,6 +1905,7 @@ main > *:not(.paper-grain) {
     padding: 0;
     overflow: hidden;
     border-radius: 10px;
+    box-shadow: 0 8px 14px rgba(28, 25, 23, 0.12);
   }
 
   .collection-grid .card-visual img {
@@ -1913,7 +1915,7 @@ main > *:not(.paper-grain) {
     max-height: none;
     margin: 0;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 62%;
     transform: none;
     border-radius: 8px;
   }
@@ -2248,6 +2250,7 @@ main > *:not(.paper-grain) {
     border-width: 2px;
     border-radius: 9px;
     overflow: hidden;
+    box-shadow: 0 6px 10px rgba(28, 25, 23, 0.1);
   }
 
   .combine-mini .front-title,
@@ -2348,11 +2351,6 @@ main > *:not(.paper-grain) {
 
   .combine-mini-2 {
     transform: translateX(12px) rotate(7deg) scale(0.9);
-  }
-
-  .result-slot .card-visual {
-    width: 104px;
-    height: 140px;
   }
 
   .result-slot .front-title {
