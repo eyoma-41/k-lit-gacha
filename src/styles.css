@@ -828,9 +828,9 @@ main > *:not(.paper-grain) {
   max-height: none;
   margin: 0;
   object-fit: cover;
-  object-position: center var(--cover-y, 62%);
-  transform: scale(var(--cover-zoom, 1));
-  transform-origin: center var(--cover-y, 62%);
+  object-position: center var(--cover-y, 66%);
+  transform: scale(var(--cover-zoom, 1.12));
+  transform-origin: center var(--cover-y, 66%);
   border-radius: 10px;
   background: rgba(255, 250, 240, 0.72);
 }
@@ -838,9 +838,9 @@ main > *:not(.paper-grain) {
 .card-visual img.cover-narrow,
 .card-visual img.cover-wide {
   object-fit: cover;
-  object-position: center var(--cover-y, 62%);
-  transform: scale(var(--cover-zoom, 1));
-  transform-origin: center var(--cover-y, 62%);
+  object-position: center var(--cover-y, 66%);
+  transform: scale(var(--cover-zoom, 1.12));
+  transform-origin: center var(--cover-y, 66%);
 }
 
 .front-book-meta {
@@ -1864,9 +1864,9 @@ main > *:not(.paper-grain) {
     margin: 0;
     border-radius: 8px;
     object-fit: cover;
-    object-position: center var(--cover-y, 62%);
-    transform: scale(var(--cover-zoom, 1));
-    transform-origin: center var(--cover-y, 62%);
+    object-position: center var(--cover-y, 66%);
+    transform: scale(var(--cover-zoom, 1.12));
+    transform-origin: center var(--cover-y, 66%);
   }
 
   .result-slot .front-title {
@@ -1922,9 +1922,9 @@ main > *:not(.paper-grain) {
     max-height: none;
     margin: 0;
     object-fit: cover;
-    object-position: center var(--cover-y, 62%);
-    transform: scale(var(--cover-zoom, 1));
-    transform-origin: center var(--cover-y, 62%);
+    object-position: center var(--cover-y, 66%);
+    transform: scale(var(--cover-zoom, 1.12));
+    transform-origin: center var(--cover-y, 66%);
     border-radius: 8px;
   }
 
@@ -2273,9 +2273,9 @@ main > *:not(.paper-grain) {
     max-height: none;
     margin: 0;
     object-fit: cover;
-    object-position: center var(--cover-y, 62%);
-    transform: scale(var(--cover-zoom, 1));
-    transform-origin: center var(--cover-y, 62%);
+    object-position: center var(--cover-y, 66%);
+    transform: scale(var(--cover-zoom, 1.12));
+    transform-origin: center var(--cover-y, 66%);
     border-radius: 7px;
   }
 

@@ -378,8 +378,20 @@ function BookCard({ card, tagColors, compact = false }) {
   const titleSizeClass = titleLength > 15 ? 'title-xs' : titleLength > 10 ? 'title-sm' : 'title-md';
   const coverYValue = String(book.표지위치Y || '').trim();
   const coverZoomValue = String(book.표지줌 || '').trim();
-  const coverY = coverYValue ? (coverYValue.endsWith('%') ? coverYValue : `${coverYValue}%`) : '62%';
-  const coverZoom = coverZoomValue || '1';
+  const autoCoverY =
+    imageFitClass === 'cover-wide'
+      ? '70%'
+      : imageFitClass === 'cover-narrow'
+        ? '60%'
+        : '66%';
+  const autoCoverZoom =
+    imageFitClass === 'cover-wide'
+      ? '1.22'
+      : imageFitClass === 'cover-narrow'
+        ? '1.06'
+        : '1.12';
+  const coverY = coverYValue ? (coverYValue.endsWith('%') ? coverYValue : `${coverYValue}%`) : autoCoverY;
+  const coverZoom = coverZoomValue || autoCoverZoom;
 
   return (
     <button
