@@ -498,8 +498,8 @@ function CapsuleMachine({ active, onDraw }) {
         <div className="emoji-window">
           <img
             className="capsule-window-art"
-            src="/assets/capsule-window-clean.svg"
-            alt="캡슐이 들어 있는 가챠 머신 내부"
+            src="/assets/capsule-window-classic.svg"
+            alt="캡슐이 가득 들어 있는 가챠 머신 내부"
             draggable="false"
           />
         </div>

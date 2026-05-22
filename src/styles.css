@@ -405,10 +405,7 @@ main > *:not(.paper-grain) {
   overflow: hidden;
   border: 7px solid #1c1917;
   border-radius: 18px 18px 28px 28px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.7), transparent 18% 82%, rgba(117, 72, 45, 0.18)),
-    radial-gradient(circle at 82% 60%, rgba(239, 78, 68, 0.88) 0 31px, transparent 33px),
-    linear-gradient(180deg, #bfe6f6, #eaf5f2);
+  background: linear-gradient(180deg, #dff1fb, #f8f5ec);
 }
 
 .emoji-window::after {
@@ -418,8 +415,8 @@ main > *:not(.paper-grain) {
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(105deg, transparent 0 42%, rgba(255, 255, 255, 0.42) 43% 50%, transparent 51%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 40%);
+    linear-gradient(105deg, transparent 0 42%, rgba(255, 255, 255, 0.3) 43% 50%, transparent 51%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%);
 }
 
 .capsule-window-art {
