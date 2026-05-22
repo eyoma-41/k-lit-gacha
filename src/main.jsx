@@ -811,7 +811,7 @@ function App() {
       setCollection((current) => [nextCard, ...current]);
       setRecent((current) => [nextCard, ...current].slice(0, 3));
       setMachineActive(false);
-      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급}《${pickedBook.제목}》획득`);
+      setGachaMessage(`${pickedRarity.표시명 || pickedRarity.등급} 《${pickedBook.제목}》획득`);
     }, 760);
   }
 
