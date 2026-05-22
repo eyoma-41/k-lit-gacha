@@ -828,8 +828,9 @@ main > *:not(.paper-grain) {
   max-height: none;
   margin: 0;
   object-fit: cover;
-  object-position: center 62%;
-  transform: none;
+  object-position: center var(--cover-y, 62%);
+  transform: scale(var(--cover-zoom, 1));
+  transform-origin: center var(--cover-y, 62%);
   border-radius: 10px;
   background: rgba(255, 250, 240, 0.72);
 }
@@ -837,8 +838,9 @@ main > *:not(.paper-grain) {
 .card-visual img.cover-narrow,
 .card-visual img.cover-wide {
   object-fit: cover;
-  object-position: center 62%;
-  transform: none;
+  object-position: center var(--cover-y, 62%);
+  transform: scale(var(--cover-zoom, 1));
+  transform-origin: center var(--cover-y, 62%);
 }
 
 .front-book-meta {
@@ -1852,7 +1854,9 @@ main > *:not(.paper-grain) {
     font-size: 48px;
   }
 
-  .result-slot .card-visual img {
+  .result-slot .card-visual img,
+  .result-slot .card-visual img.cover-narrow,
+  .result-slot .card-visual img.cover-wide {
     width: 100%;
     height: 100%;
     max-width: none;
@@ -1860,8 +1864,9 @@ main > *:not(.paper-grain) {
     margin: 0;
     border-radius: 8px;
     object-fit: cover;
-    object-position: center 62%;
-    transform: none;
+    object-position: center var(--cover-y, 62%);
+    transform: scale(var(--cover-zoom, 1));
+    transform-origin: center var(--cover-y, 62%);
   }
 
   .result-slot .front-title {
@@ -1908,15 +1913,18 @@ main > *:not(.paper-grain) {
     box-shadow: 0 8px 14px rgba(28, 25, 23, 0.12);
   }
 
-  .collection-grid .card-visual img {
+  .collection-grid .card-visual img,
+  .collection-grid .card-visual img.cover-narrow,
+  .collection-grid .card-visual img.cover-wide {
     width: 100%;
     height: 100%;
     max-width: none;
     max-height: none;
     margin: 0;
     object-fit: cover;
-    object-position: center 62%;
-    transform: none;
+    object-position: center var(--cover-y, 62%);
+    transform: scale(var(--cover-zoom, 1));
+    transform-origin: center var(--cover-y, 62%);
     border-radius: 8px;
   }
 
@@ -2251,6 +2259,24 @@ main > *:not(.paper-grain) {
     border-radius: 9px;
     overflow: hidden;
     box-shadow: 0 6px 10px rgba(28, 25, 23, 0.1);
+  }
+
+  .combine-mini .card-visual img,
+  .combine-mini .card-visual img.cover-narrow,
+  .combine-mini .card-visual img.cover-wide,
+  .combine-output .card-visual img,
+  .combine-output .card-visual img.cover-narrow,
+  .combine-output .card-visual img.cover-wide {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    object-fit: cover;
+    object-position: center var(--cover-y, 62%);
+    transform: scale(var(--cover-zoom, 1));
+    transform-origin: center var(--cover-y, 62%);
+    border-radius: 7px;
   }
 
   .combine-mini .front-title,

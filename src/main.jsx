@@ -200,6 +200,8 @@ function cleanBooks(rows) {
         소개문: book.소개문 || '소개문이 아직 등록되지 않았습니다.',
         확인메모: memo,
         이미지URL: normalizeImageUrl(imageUrl || book.id),
+        표지위치Y: book.표지위치Y || book['표지 위치 Y'] || book.coverY || book.CoverY || '',
+        표지줌: book.표지줌 || book['표지 줌'] || book.coverZoom || book.CoverZoom || '',
         태그1: book.태그1 || '',
         태그2: book.태그2 || '',
         태그3: book.태그3 || '',
@@ -374,6 +376,10 @@ function BookCard({ card, tagColors, compact = false }) {
   const pattern = tags.slice(0, 5).map(tagEmoji);
   const titleLength = [...(book.제목 || '')].length;
   const titleSizeClass = titleLength > 15 ? 'title-xs' : titleLength > 10 ? 'title-sm' : 'title-md';
+  const coverYValue = String(book.표지위치Y || '').trim();
+  const coverZoomValue = String(book.표지줌 || '').trim();
+  const coverY = coverYValue ? (coverYValue.endsWith('%') ? coverYValue : `${coverYValue}%`) : '62%';
+  const coverZoom = coverZoomValue || '1';
 
   return (
     <button
@@ -406,6 +412,10 @@ function BookCard({ card, tagColors, compact = false }) {
                 src={book.이미지URL}
                 alt={`${book.제목} 이미지`}
                 loading="lazy"
+                style={{
+                  '--cover-y': coverY,
+                  '--cover-zoom': coverZoom,
+                }}
                 onLoad={(event) => {
                   const image = event.currentTarget;
                   const imageRatio = image.naturalWidth / image.naturalHeight;
