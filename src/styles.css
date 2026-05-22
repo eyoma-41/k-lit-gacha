@@ -468,49 +468,61 @@ main > *:not(.paper-grain) {
 .window-capsule {
   position: absolute;
   z-index: 1;
-  width: 62px;
-  height: 35px;
+  width: 46px;
+  height: 46px;
   border: 4px solid #1c1917;
-  border-radius: 999px;
+  border-radius: 50%;
   background:
-    linear-gradient(105deg, rgba(255, 255, 255, 0.58), transparent 32%),
-    linear-gradient(90deg, var(--cap-color, #ef6f6c) 0 50%, #fffaf0 50% 100%);
+    radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.78) 0 9px, transparent 10px),
+    linear-gradient(145deg, var(--cap-color, #ef6f6c) 0 49%, #fffaf0 50% 100%);
   box-shadow:
-    inset 0 4px 8px rgba(255, 255, 255, 0.42),
-    inset 0 -5px 8px rgba(28, 25, 23, 0.1),
-    0 5px 8px rgba(28, 25, 23, 0.18);
+    inset 5px 7px 10px rgba(255, 255, 255, 0.32),
+    inset -6px -8px 12px rgba(28, 25, 23, 0.14),
+    0 6px 9px rgba(28, 25, 23, 0.2);
+}
+
+.window-capsule::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background:
+    linear-gradient(145deg, transparent 46%, rgba(28, 25, 23, 0.34) 47% 52%, transparent 53%),
+    radial-gradient(circle at 62% 72%, rgba(28, 25, 23, 0.12), transparent 34%);
+  pointer-events: none;
 }
 
 .window-capsule::after {
   content: "";
   position: absolute;
   left: 10px;
-  top: 6px;
-  width: 18px;
-  height: 8px;
+  top: 8px;
+  width: 15px;
+  height: 9px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.56);
-  transform: rotate(-15deg);
+  background: rgba(255, 255, 255, 0.62);
+  transform: rotate(-25deg);
+  pointer-events: none;
 }
 
-.window-capsule-1 { left: -8px; top: 6px; --cap-color: #ef6f6c; transform: rotate(18deg) scale(0.9); }
-.window-capsule-2 { left: 42px; top: 2px; --cap-color: #3aaed8; transform: rotate(-16deg) scale(0.86); }
-.window-capsule-3 { left: 91px; top: 8px; --cap-color: #9bdc58; transform: rotate(10deg) scale(0.92); }
-.window-capsule-4 { left: 143px; top: 2px; --cap-color: #f4ca42; transform: rotate(-13deg) scale(0.88); }
-.window-capsule-5 { right: -8px; top: 12px; --cap-color: #b985d6; transform: rotate(22deg) scale(0.86); }
-.window-capsule-6 { left: 12px; top: 42px; --cap-color: #f47742; transform: rotate(-24deg) scale(0.98); }
-.window-capsule-7 { left: 62px; top: 38px; --cap-color: #77d88b; transform: rotate(20deg) scale(0.92); }
-.window-capsule-8 { left: 114px; top: 42px; --cap-color: #d75e9f; transform: rotate(-10deg) scale(0.96); }
-.window-capsule-9 { right: 26px; top: 42px; --cap-color: #56b9dd; transform: rotate(18deg) scale(0.92); }
-.window-capsule-10 { left: -6px; top: 78px; --cap-color: #9bdc58; transform: rotate(15deg) scale(0.96); }
-.window-capsule-11 { left: 46px; top: 74px; --cap-color: #f4ca42; transform: rotate(-17deg) scale(1.02); }
-.window-capsule-12 { left: 104px; top: 78px; --cap-color: #ef6f6c; transform: rotate(26deg) scale(0.95); }
-.window-capsule-13 { left: 160px; top: 74px; --cap-color: #3aaed8; transform: rotate(-21deg) scale(0.98); }
-.window-capsule-14 { right: -4px; top: 84px; --cap-color: #f47742; transform: rotate(10deg) scale(0.9); }
-.window-capsule-15 { left: 22px; bottom: 8px; --cap-color: #b985d6; transform: rotate(-8deg) scale(1); }
-.window-capsule-16 { left: 80px; bottom: 10px; --cap-color: #77d88b; transform: rotate(14deg) scale(0.98); }
-.window-capsule-17 { left: 138px; bottom: 8px; --cap-color: #f4ca42; transform: rotate(-12deg) scale(1.02); }
-.window-capsule-18 { right: 14px; bottom: 6px; --cap-color: #ef6f6c; transform: rotate(16deg) scale(0.96); }
+.window-capsule-1 { left: -6px; top: 4px; --cap-color: #ef6f6c; transform: rotate(18deg) scale(0.9); }
+.window-capsule-2 { left: 36px; top: 0; --cap-color: #3aaed8; transform: rotate(-18deg) scale(0.86); }
+.window-capsule-3 { left: 76px; top: 6px; --cap-color: #9bdc58; transform: rotate(10deg) scale(0.92); }
+.window-capsule-4 { left: 119px; top: 0; --cap-color: #f4ca42; transform: rotate(-14deg) scale(0.88); }
+.window-capsule-5 { right: 28px; top: 5px; --cap-color: #b985d6; transform: rotate(22deg) scale(0.86); }
+.window-capsule-6 { right: -5px; top: 18px; --cap-color: #f47742; transform: rotate(-16deg) scale(0.82); }
+.window-capsule-7 { left: 10px; top: 42px; --cap-color: #77d88b; transform: rotate(-24deg) scale(0.98); }
+.window-capsule-8 { left: 54px; top: 38px; --cap-color: #d75e9f; transform: rotate(20deg) scale(0.92); }
+.window-capsule-9 { left: 98px; top: 42px; --cap-color: #56b9dd; transform: rotate(-10deg) scale(0.96); }
+.window-capsule-10 { left: 143px; top: 40px; --cap-color: #f47742; transform: rotate(18deg) scale(0.92); }
+.window-capsule-11 { right: 20px; top: 47px; --cap-color: #9bdc58; transform: rotate(15deg) scale(0.96); }
+.window-capsule-12 { left: -4px; top: 82px; --cap-color: #f4ca42; transform: rotate(-17deg) scale(1.02); }
+.window-capsule-13 { left: 45px; top: 77px; --cap-color: #ef6f6c; transform: rotate(26deg) scale(0.95); }
+.window-capsule-14 { left: 92px; top: 84px; --cap-color: #3aaed8; transform: rotate(-21deg) scale(0.98); }
+.window-capsule-15 { left: 140px; top: 78px; --cap-color: #b985d6; transform: rotate(10deg) scale(0.9); }
+.window-capsule-16 { right: 18px; top: 85px; --cap-color: #77d88b; transform: rotate(-8deg) scale(1); }
+.window-capsule-17 { left: 30px; bottom: 6px; --cap-color: #f4ca42; transform: rotate(14deg) scale(0.98); }
+.window-capsule-18 { left: 87px; bottom: 4px; --cap-color: #ef6f6c; transform: rotate(-12deg) scale(1.02); }
 
 .emoji-body {
   position: absolute;
