@@ -802,6 +802,7 @@ main > *:not(.paper-grain) {
   width: 150px;
   height: 206px;
   margin: 14px auto 12px;
+  padding: 0;
   overflow: hidden;
   place-items: center;
   border: 3px solid rgba(28, 25, 23, 0.82);
@@ -823,45 +824,21 @@ main > *:not(.paper-grain) {
   display: block;
   width: 100%;
   height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
+  transform: none;
+  border-radius: 10px;
   background: rgba(255, 250, 240, 0.72);
 }
 
-.card-visual img.cover-narrow {
-  transform: scale(1.2);
-  transform-origin: center;
-}
-
+.card-visual img.cover-narrow,
 .card-visual img.cover-wide {
-  object-fit: contain;
-  transform: scale(1.08);
-  transform-origin: center;
-}
-
-.result-slot .card-visual img {
   object-fit: cover;
-  object-position: center 42%;
-}
-
-.result-slot .card-visual img.cover-wide {
-  object-fit: contain;
-  transform: scale(1.14);
-  transform-origin: center;
-}
-
-.result-slot .card-visual {
-  border-radius: 8px;
-}
-
-.result-slot .card-visual img {
-  border-radius: 4px;
-}
-
-.collection-grid .card-visual img {
-  object-fit: contain;
-  object-position: center;
-  background: rgba(255, 250, 240, 0.72);
+  object-position: center center;
+  transform: none;
 }
 
 .front-book-meta {
@@ -1862,10 +1839,12 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    width: 98px;
-    height: 134px;
-    margin: 7px auto 7px;
-    border-radius: 10px;
+    width: 112px;
+    height: 150px;
+    aspect-ratio: 112 / 150;
+    margin: 8px auto;
+    padding: 0;
+    border-radius: 12px;
   }
 
   .result-slot .card-visual span {
@@ -1875,7 +1854,13 @@ main > *:not(.paper-grain) {
   .result-slot .card-visual img {
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center center;
+    transform: none;
   }
 
   .result-slot .front-title {
@@ -1913,18 +1898,24 @@ main > *:not(.paper-grain) {
   }
 
   .collection-grid .card-visual {
-    width: min(96px, 70%);
+    width: 96px;
     height: 132px;
-    margin: 8px auto 8px;
+    margin: 8px auto;
+    padding: 0;
+    overflow: hidden;
     border-radius: 10px;
   }
 
   .collection-grid .card-visual img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 10px;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    object-fit: cover;
+    object-position: center center;
+    transform: none;
+    border-radius: 8px;
   }
 
   .collection-grid .card-visual span {
@@ -2019,8 +2010,8 @@ main > *:not(.paper-grain) {
   }
 
   .result-slot .card-visual {
-    width: 90px;
-    height: 124px;
+    width: 104px;
+    height: 140px;
   }
 
   .result-slot .rarity-badge {
@@ -2176,50 +2167,6 @@ main > *:not(.paper-grain) {
 }
 
 @media (max-width: 860px) {
-  .result-slot .card-visual {
-    width: min(112px, 62%);
-    aspect-ratio: 2 / 3;
-    height: auto;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    background: rgba(255, 250, 240, 0.72);
-  }
-
-  .result-slot .card-visual img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
-
-  .result-slot .card-visual img.cover-narrow {
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    margin: 0 auto;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
-
-  .result-slot .card-visual img.cover-wide {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto 0;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
-
   .combine-layout {
     gap: 14px;
   }
@@ -2235,128 +2182,21 @@ main > *:not(.paper-grain) {
   .combine-stage {
     grid-template-columns: minmax(118px, 1fr) 22px minmax(118px, 1fr);
     gap: 8px;
-    min-height: 292px;
+    min-height: 324px;
     justify-content: center;
     overflow: hidden;
-    padding: 10px 8px;
-  }
-
-  .combine-stack {
-    width: 142px;
-    height: 210px;
-    justify-self: center;
-  }
-
-  .combine-mini {
-    left: 8px;
-    top: 0;
-  }
-
-  .combine-mini .card-shell,
-  .combine-output .card-shell,
-  .combine-placeholder {
-    width: 126px;
-    height: 184px;
-  }
-
-  .combine-mini-0 {
-    transform: translateX(-14px) rotate(-7deg) scale(0.72);
-  }
-
-  .combine-mini-1 {
-    transform: translateX(0) rotate(0deg) scale(0.72);
-  }
-
-  .combine-mini-2 {
-    transform: translateX(14px) rotate(7deg) scale(0.72);
-  }
-
-  .combine-mini:only-child {
-    transform: translateX(0) rotate(0deg) scale(0.72);
-  }
-
-  .combine-output {
-    min-width: 0;
-  }
-
-  .combine-arrow {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 380px) {
-  .combine-stage {
-    grid-template-columns: minmax(104px, 1fr) 18px minmax(104px, 1fr);
-    gap: 6px;
-    min-height: 264px;
-    padding: 8px 6px;
-  }
-
-  .combine-stack {
-    width: 122px;
-    height: 188px;
-  }
-
-  .combine-mini .card-shell,
-  .combine-output .card-shell,
-  .combine-placeholder {
-    width: 112px;
-    height: 164px;
-  }
-
-  .combine-mini {
-    left: 5px;
-  }
-}
-
-@media (max-width: 860px) {
-  .result-slot .card-visual {
-    box-sizing: border-box;
-    padding: 5px;
-  }
-
-  .result-slot .card-visual img,
-  .result-slot .card-visual img.cover-narrow,
-  .result-slot .card-visual img.cover-wide {
-    border-radius: 3px;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
-
-  .collection-grid .card-visual {
-    box-sizing: border-box;
-    padding: 5px;
-    overflow: hidden;
-  }
-
-  .collection-grid .card-visual img,
-  .collection-grid .card-visual img.cover-narrow,
-  .collection-grid .card-visual img.cover-wide {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 3px;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
-}
-
-@media (max-width: 860px) {
-  .combine-stage {
-    min-height: 324px;
-    padding-block: 18px;
+    padding: 18px 8px;
   }
 
   .combine-stack {
     width: 150px;
     height: 238px;
+    justify-self: center;
     overflow: visible;
   }
 
   .combine-mini {
+    left: 8px;
     top: 14px;
   }
 
@@ -2364,6 +2204,11 @@ main > *:not(.paper-grain) {
   .combine-output .card-shell {
     width: 148px;
     height: 216px;
+  }
+
+  .combine-placeholder {
+    width: 126px;
+    height: 184px;
   }
 
   .combine-mini .card-front,
@@ -2396,31 +2241,13 @@ main > *:not(.paper-grain) {
 
   .combine-mini .card-visual,
   .combine-output .card-visual {
-    box-sizing: border-box;
-    width: min(78px, 64%);
-    aspect-ratio: 2 / 3;
-    height: auto;
-    margin: 8px auto 8px;
-    padding: 4px;
+    width: 78px;
+    height: 107px;
+    margin: 8px auto;
+    padding: 0;
     border-width: 2px;
     border-radius: 9px;
     overflow: hidden;
-  }
-
-  .combine-mini .card-visual img,
-  .combine-mini .card-visual img.cover-narrow,
-  .combine-mini .card-visual img.cover-wide,
-  .combine-output .card-visual img,
-  .combine-output .card-visual img.cover-narrow,
-  .combine-output .card-visual img.cover-wide {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 2px;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
   }
 
   .combine-mini .front-title,
@@ -2448,93 +2275,21 @@ main > *:not(.paper-grain) {
   .combine-mini:only-child {
     transform: translateX(0) rotate(0deg) scale(0.92);
   }
-}
 
-@media (max-width: 380px) {
-  .combine-stage {
-    min-height: 304px;
-    padding-block: 16px;
+  .combine-output {
+    min-width: 0;
   }
 
-  .combine-stack {
-    width: 132px;
-    height: 218px;
+  .combine-arrow {
+    font-size: 22px;
   }
 
-  .combine-mini .card-shell,
-  .combine-output .card-shell {
-    width: 132px;
-    height: 193px;
-  }
-
-  .combine-mini .card-visual,
-  .combine-output .card-visual {
-    width: min(70px, 64%);
-  }
-
-  .combine-mini-0 {
-    transform: translateX(-12px) rotate(-7deg) scale(0.9);
-  }
-
-  .combine-mini-1 {
-    transform: translateX(0) rotate(0deg) scale(0.9);
-  }
-
-  .combine-mini-2 {
-    transform: translateX(12px) rotate(7deg) scale(0.9);
-  }
-}
-
-@media (max-width: 860px) {
-  .result-slot .card-visual {
-    width: 112px;
-    height: 150px;
-    aspect-ratio: 112 / 150;
-    margin: 8px auto;
-    padding: 0;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: rgba(255, 250, 240, 0.72);
-  }
-
-  .result-slot .card-visual img,
-  .result-slot .card-visual img.cover-narrow,
-  .result-slot .card-visual img.cover-wide {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    margin: 0;
-    border-radius: 8px;
-    object-fit: cover;
-    object-position: center 46%;
-    transform: none;
-  }
-}
-
-@media (max-width: 380px) {
-  .result-slot .card-visual {
-    width: 104px;
-    height: 140px;
-  }
-}
-
-@media (max-width: 860px) {
   header .status-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
     text-align: center;
-  }
-
-  .result-slot .card-visual img,
-  .result-slot .card-visual img.cover-narrow,
-  .result-slot .card-visual img.cover-wide {
-    object-position: center center;
   }
 
   .result-slot .front-title {
@@ -2550,6 +2305,56 @@ main > *:not(.paper-grain) {
 }
 
 @media (max-width: 380px) {
+  .combine-stage {
+    grid-template-columns: minmax(104px, 1fr) 18px minmax(104px, 1fr);
+    gap: 6px;
+    min-height: 304px;
+    padding: 16px 6px;
+  }
+
+  .combine-stack {
+    width: 132px;
+    height: 218px;
+  }
+
+  .combine-mini {
+    left: 5px;
+  }
+
+  .combine-mini .card-shell,
+  .combine-output .card-shell {
+    width: 132px;
+    height: 193px;
+  }
+
+  .combine-placeholder {
+    width: 112px;
+    height: 164px;
+  }
+
+  .combine-mini .card-visual,
+  .combine-output .card-visual {
+    width: 70px;
+    height: 96px;
+  }
+
+  .combine-mini-0 {
+    transform: translateX(-12px) rotate(-7deg) scale(0.9);
+  }
+
+  .combine-mini-1 {
+    transform: translateX(0) rotate(0deg) scale(0.9);
+  }
+
+  .combine-mini-2 {
+    transform: translateX(12px) rotate(7deg) scale(0.9);
+  }
+
+  .result-slot .card-visual {
+    width: 104px;
+    height: 140px;
+  }
+
   .result-slot .front-title {
     font-size: 14px;
   }
