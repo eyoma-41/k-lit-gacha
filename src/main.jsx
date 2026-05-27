@@ -351,6 +351,13 @@ function uniqueValues(items, selector) {
   return [...new Set(items.map(selector).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), 'ko'));
 }
 
+function localDateKey() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 function backRarityLines(label) {
   if (label?.endsWith('레어') && label.length > 3) {
     return [label.slice(0, -2), '레어'];
@@ -678,6 +685,7 @@ function App() {
   const [combineResult, setCombineResult] = useState(null);
   const [pendingCombination, setPendingCombination] = useState(null);
   const [combineAnimating, setCombineAnimating] = useState(false);
+  const [dailyRewardMessage, setDailyRewardMessage] = useState('');
 
   useEffect(() => {
     if (localStorage.getItem('knovel-storage-version') === STORAGE_VERSION) return;
@@ -690,6 +698,23 @@ function App() {
     localStorage.setItem('knovel-storage-version', STORAGE_VERSION);
     window.location.reload();
   }, []);
+
+  useEffect(() => {
+    const today = localDateKey();
+    const rewardKey = 'knovel-daily-reward-date-open-20';
+    const lastRewardDate = localStorage.getItem(rewardKey);
+
+    if (!lastRewardDate) {
+      localStorage.setItem(rewardKey, today);
+      return;
+    }
+
+    if (lastRewardDate === today) return;
+
+    localStorage.setItem(rewardKey, today);
+    setCoins((current) => current + 5);
+    setDailyRewardMessage('오늘의 접속 보상으로 토큰 5개를 받았습니다.');
+  }, [setCoins]);
 
   useEffect(() => {
     async function loadData() {
@@ -900,6 +925,9 @@ function App() {
             <span>새로운 작품을</span>
             <span>발견하세요.</span>
           </h2>
+          {dailyRewardMessage && (
+            <p className="daily-reward-message">{dailyRewardMessage}</p>
+          )}
         </div>
 
         <div className="gacha-column">
